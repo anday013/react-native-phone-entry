@@ -1,12 +1,10 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'react-native-phone-entry';
-
-const result = multiply(3, 7);
+import { StyleSheet, View } from 'react-native';
+import { PhoneInput } from 'react-native-phone-entry';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <PhoneInput />
     </View>
   );
 }

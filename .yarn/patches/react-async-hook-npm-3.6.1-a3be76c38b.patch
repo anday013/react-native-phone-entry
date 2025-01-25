@@ -1,0 +1,13 @@
+diff --git a/package.json b/package.json
+index d881745a54f045bc5dae331c0660d9c8a0f66097..3ba7d1d90141bd72e8eac8589c791f0bd4096dd6 100644
+--- a/package.json
++++ b/package.json
+@@ -31,7 +31,7 @@
+     "npm": ">=5"
+   },
+   "main": "dist/index.js",
+-  "module": "react-async-hook.esm.js",
++  "module": "dist/react-async-hook.esm.js",
+   "typings": "dist/index.d.ts",
+   "files": [
+     "dist"

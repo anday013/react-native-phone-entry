@@ -68,6 +68,7 @@
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native/eslint-config": "^0.73.1",
     "@release-it/conventional-changelog": "^9.0.2",
+    "@types/google-libphonenumber": "^7.4.30",
     "@types/jest": "^29.5.5",
     "@types/react": "^18.2.44",
     "commitlint": "^17.0.2",
@@ -75,16 +76,20 @@
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "google-libphonenumber": "^3.2.40",
     "jest": "^29.7.0",
     "prettier": "^3.0.3",
     "react": "18.3.1",
     "react-native": "0.76.6",
     "react-native-builder-bob": "^0.35.2",
+    "react-native-country-picker-modal": "^2.0.0",
+    "react-native-mask-input": "^1.2.3",
     "release-it": "^17.10.0",
     "typescript": "^5.2.2"
   },
   "resolutions": {
-    "@types/react": "^18.2.44"
+    "@types/react": "^18.2.44",
+    "react-async-hook@3.6.1": "patch:react-async-hook@npm%3A3.6.1#./.yarn/patches/react-async-hook-npm-3.6.1-a3be76c38b.patch"
   },
   "peerDependencies": {
     "react": "*",
