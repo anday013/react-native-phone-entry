@@ -10,14 +10,13 @@ import MaskInput from 'react-native-mask-input';
 import type { PhoneInputProps } from './PhoneInput.types';
 import styles from './styles';
 import { usePhoneInput } from './usePhoneInput';
-import { maskPerCountry } from './utils';
 
 const dropDown =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAi0lEQVRYR+3WuQ6AIBRE0eHL1T83FBqU5S1szdiY2NyTKcCAzU/Y3AcBXIALcIF0gRPAsehgugDEXnYQrUC88RIgfpuJ+MRrgFmILN4CjEYU4xJgFKIa1wB6Ec24FuBFiHELwIpQxa0ALUId9wAkhCnuBdQQ5ngP4I9wxXsBDyJ9m+8y/g9wAS7ABW4giBshQZji3AAAAABJRU5ErkJggg==';
 
 export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
   const {
-    models: { callingCode, countryCode, phoneNumber },
+    models: { callingCode, countryCode, phoneNumber, mask },
     actions: { handleChangeText, onSelect },
     forms: { modalVisible, setModalVisible },
   } = usePhoneInput(props);
@@ -106,12 +105,9 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             (renderDropdownImage || <>{_renderDropdownImage}</>)}
         </TouchableOpacity>
         <View style={[styles.textContainer, textContainerStyle]}>
-          {callingCode && layout === 'first' && (
-            <Text style={[styles.codeText, codeTextStyle]}>{callingCode}</Text>
-          )}
           <MaskInput
             style={[styles.numberText, textInputStyle]}
-            mask={maskPerCountry[countryCode]}
+            mask={mask}
             placeholder={placeholder}
             onChangeText={handleChangeText}
             value={phoneNumber}

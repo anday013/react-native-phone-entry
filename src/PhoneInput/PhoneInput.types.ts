@@ -1,5 +1,9 @@
 import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
-import type { Country, CountryCode } from 'react-native-country-picker-modal';
+import type {
+  CallingCode,
+  Country,
+  CountryCode,
+} from 'react-native-country-picker-modal';
 import type { CountryFilterProps } from 'react-native-country-picker-modal/lib/CountryFilter';
 import type { MaskInputProps } from 'react-native-mask-input';
 
@@ -7,9 +11,12 @@ export type PhoneInputProps = {
   withDarkTheme?: boolean;
   withShadow?: boolean;
   autoFocus?: boolean;
-  defaultCode?: CountryCode;
   value?: string;
-  defaultValue?: string;
+  defaultValues?: {
+    countryCode: CountryCode;
+    callingCode: CallingCode;
+    phoneNumber: string;
+  };
   disabled?: boolean;
   disableArrowIcon?: boolean;
   placeholder?: string;

@@ -1,68 +1,78 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
+  type CallingCode,
   type Country,
   type CountryCode,
 } from 'react-native-country-picker-modal';
+import type { Mask } from 'react-native-mask-input';
 import type { PhoneInputProps } from './PhoneInput.types';
-import { ensurePlusPrefix, getFullPhoneNumber } from './utils';
+import {
+  callingCodePerCountryCode,
+  ensurePlusPrefix,
+  getFullMaskPhoneNumber,
+} from './utils';
 
 export const usePhoneInput = ({
-  defaultCode,
+  defaultValues,
   value,
-  defaultValue,
   onChangeCountry,
   onChangeFormattedText,
   onChangeText,
 }: PhoneInputProps) => {
-  const [callingCode, setCallingCode] = useState<string | undefined>(
-    defaultCode ? undefined : '+994'
-  );
+  const [callingCode, setCallingCode] = useState<CallingCode>(
+    defaultValues?.callingCode || '+994'
+  ); // TODO: Get rid of calling code in the future
   const [phoneNumber, setPhoneNumber] = useState<string>(
-    value || defaultValue || ''
+    value || defaultValues?.phoneNumber || ''
   );
   const [modalVisible, setModalVisible] = useState(false);
   const [countryCode, setCountryCode] = useState<CountryCode>(
-    defaultCode || 'AZ'
+    defaultValues?.countryCode || 'AZ'
   );
+  const [mask, setMask] = useState<Mask>(
+    getFullMaskPhoneNumber(callingCode, countryCode)
+  );
+
+  useEffect(() => {
+    setPhoneNumber(callingCode);
+    console.log('callingCode changed', callingCode);
+  }, [callingCode]);
+
+  const updateCountryOnType = useCallback((inputText: string) => {
+    if (callingCodePerCountryCode?.[inputText]) {
+      setCallingCode(inputText);
+      const newCountryCode = callingCodePerCountryCode?.[inputText];
+      setCountryCode(newCountryCode);
+      setMask(getFullMaskPhoneNumber(inputText, newCountryCode));
+    }
+  }, []);
 
   const onSelect = useCallback(
     (country: Country) => {
-      console.log('ON COUNTRY SELECT CALLED', country);
-      const newCallingCode = country.callingCode[0];
+      const newCallingCode = ensurePlusPrefix(country.callingCode[0]);
       setCountryCode(country.cca2);
-      setCallingCode(ensurePlusPrefix(newCallingCode));
+      setCallingCode(newCallingCode);
+      setMask(getFullMaskPhoneNumber(newCallingCode, country.cca2));
       onChangeCountry?.(country);
-      if (newCallingCode) {
-        onChangeFormattedText?.(
-          getFullPhoneNumber(newCallingCode, phoneNumber)
-        );
-      } else {
-        onChangeFormattedText?.(phoneNumber);
-      }
+      onChangeFormattedText?.(phoneNumber);
     },
     [onChangeCountry, onChangeFormattedText, phoneNumber]
   );
 
   const handleChangeText = useCallback(
     (_masked: string, unmasked: string, _obfuscated: string) => {
-      setPhoneNumber(unmasked);
-      onChangeText?.(unmasked);
-      if (callingCode) {
-        onChangeFormattedText?.(
-          unmasked.length > 0
-            ? getFullPhoneNumber(callingCode, unmasked)
-            : unmasked
-        );
-      } else {
-        onChangeFormattedText?.(unmasked);
-      }
+      const text = ensurePlusPrefix(unmasked);
+      updateCountryOnType(text);
+      setPhoneNumber(text);
+      onChangeText?.(text);
+      onChangeFormattedText?.(text);
     },
-    [onChangeText, onChangeFormattedText, callingCode]
+    [updateCountryOnType, onChangeText, onChangeFormattedText]
   );
 
   return {
-    models: { countryCode, callingCode, phoneNumber },
-    actions: { onSelect, handleChangeText },
+    models: { countryCode, callingCode, phoneNumber, mask },
+    actions: { onSelect, handleChangeText, setMask },
     forms: { modalVisible, setModalVisible },
   };
 };
