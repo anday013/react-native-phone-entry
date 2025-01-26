@@ -1,11 +1,7 @@
-import type {
-  StyleProp,
-  TextInputProps,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import type { Country, CountryCode } from 'react-native-country-picker-modal';
 import type { CountryFilterProps } from 'react-native-country-picker-modal/lib/CountryFilter';
+import type { MaskInputProps } from 'react-native-mask-input';
 
 export type PhoneInputProps = {
   withDarkTheme?: boolean;
@@ -23,7 +19,7 @@ export type PhoneInputProps = {
   renderDropdownImage?: JSX.Element;
   containerStyle?: StyleProp<ViewStyle>;
   textContainerStyle?: StyleProp<ViewStyle>;
-  textInputProps?: TextInputProps;
+  maskInputProps?: MaskInputProps;
   textInputStyle?: StyleProp<TextStyle>;
   codeTextStyle?: StyleProp<TextStyle>;
   flagButtonStyle?: StyleProp<ViewStyle>;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   type Country,
   type CountryCode,
@@ -7,7 +7,6 @@ import type { PhoneInputProps } from './PhoneInput.types';
 
 export const usePhoneInput = ({
   defaultCode,
-  disabled,
   value,
   defaultValue,
   onChangeCountry,
@@ -17,53 +16,46 @@ export const usePhoneInput = ({
   const [code, setCode] = useState<string | undefined>(
     defaultCode ? undefined : '994'
   );
-  const [number, setNumber] = useState<string>(value || defaultValue || '');
+  const [phoneNumber, setPhoneNumber] = useState<string>(
+    value || defaultValue || ''
+  );
   const [modalVisible, setModalVisible] = useState(false);
   const [countryCode, setCountryCode] = useState<CountryCode>(
     defaultCode || 'AZ'
   );
-  const [isDisabled, setIsDisabled] = useState(disabled);
-
-  useEffect(() => {
-    setIsDisabled(disabled);
-    if (value !== undefined && value !== number) {
-      setNumber(value);
-    }
-  }, [disabled, number, value]);
 
   const onSelect = useCallback(
     (country: Country) => {
+      console.log('ON COUNTRY SELECT CALLED');
       setCountryCode(country.cca2);
       setCode(country.callingCode[0]);
-      if (onChangeCountry) {
-        onChangeCountry(country);
-      }
-      if (onChangeFormattedText) {
-        if (country.callingCode[0]) {
-          onChangeFormattedText(`+${country.callingCode[0]}${number}`);
-        } else {
-          onChangeFormattedText(number);
-        }
+      onChangeCountry?.(country);
+      if (country.callingCode[0]) {
+        onChangeFormattedText?.(`+${country.callingCode[0]}${phoneNumber}`);
+      } else {
+        onChangeFormattedText?.(phoneNumber);
       }
     },
-    [onChangeCountry, onChangeFormattedText, number]
+    [onChangeCountry, onChangeFormattedText, phoneNumber]
   );
 
   const handleChangeText = useCallback(
-    (text: string) => {
-      setNumber(text);
-      onChangeText?.(text);
+    (_masked: string, unmasked: string, _obfuscated: string) => {
+      setPhoneNumber(unmasked);
+      onChangeText?.(unmasked);
       if (code) {
-        onChangeFormattedText?.(text.length > 0 ? `+${code}${text}` : text);
+        onChangeFormattedText?.(
+          unmasked.length > 0 ? `+${code}${unmasked}` : unmasked
+        );
       } else {
-        onChangeFormattedText?.(text);
+        onChangeFormattedText?.(unmasked);
       }
     },
     [onChangeText, onChangeFormattedText, code]
   );
 
   return {
-    models: { countryCode, code, number, isDisabled },
+    models: { countryCode, code, phoneNumber },
     actions: { onSelect, handleChangeText },
     forms: { modalVisible, setModalVisible },
   };

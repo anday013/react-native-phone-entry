@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import CountryPicker, {
   CountryModalProvider,
@@ -17,7 +17,7 @@ const dropDown =
 
 export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
   const {
-    models: { code, countryCode, isDisabled, number },
+    models: { code, countryCode, phoneNumber },
     actions: { handleChangeText, onSelect },
     forms: { modalVisible, setModalVisible },
   } = usePhoneInput(props);
@@ -26,7 +26,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
     withShadow,
     withDarkTheme,
     codeTextStyle,
-    textInputProps,
+    maskInputProps,
     textInputStyle,
     autoFocus,
     placeholder = 'Phone Number',
@@ -39,9 +39,10 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
     filterProps = {},
     countryPickerButtonStyle,
     layout = 'first',
+    disabled,
   } = props;
 
-  const _renderDropdownImage = useCallback(() => {
+  const _renderDropdownImage = useMemo(() => {
     return (
       <Image
         source={{ uri: dropDown }}
@@ -80,7 +81,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             flagButtonStyle,
             countryPickerButtonStyle,
           ]}
-          disabled={isDisabled}
+          disabled={disabled}
           onPress={() => setModalVisible(true)}
         >
           <CountryPicker
@@ -91,7 +92,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             filterProps={filterProps}
             countryCode={countryCode}
             withCallingCode
-            disableNativeModal={isDisabled}
+            disableNativeModal={disabled}
             visible={modalVisible}
             theme={withDarkTheme ? DARK_THEME : DEFAULT_THEME}
             renderFlagButton={renderFlagButton}
@@ -102,7 +103,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             <Text style={[styles.codeText, codeTextStyle]}>{`+${code}`}</Text>
           )}
           {!disableArrowIcon &&
-            (renderDropdownImage || <>{_renderDropdownImage()}</>)}
+            (renderDropdownImage || <>{_renderDropdownImage}</>)}
         </TouchableOpacity>
         <View style={[styles.textContainer, textContainerStyle]}>
           {code && layout === 'first' && (
@@ -113,13 +114,13 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             mask={maskPerCountry[countryCode]}
             placeholder={placeholder}
             onChangeText={handleChangeText}
-            value={number}
-            editable={!isDisabled}
+            value={phoneNumber}
+            editable={!disabled}
             selectionColor="black"
             keyboardAppearance={withDarkTheme ? 'dark' : 'default'}
             keyboardType="number-pad"
             autoFocus={autoFocus}
-            {...textInputProps}
+            {...maskInputProps}
           />
         </View>
       </View>
