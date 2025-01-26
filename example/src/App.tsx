@@ -6,9 +6,6 @@ export default function App() {
     <View style={styles.container}>
       <PhoneInput
         onChangeCountry={(country) => console.log('country changed:', country)}
-        onChangeFormattedText={(text) =>
-          console.log('formatted text changed:', text)
-        }
         onChangeText={(text) => console.log('text changed:', text)}
         withShadow
       />

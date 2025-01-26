@@ -5,18 +5,14 @@ import {
   type CountryCode,
 } from 'react-native-country-picker-modal';
 import type { Mask } from 'react-native-mask-input';
+import { callingCodePerCountryCode } from './constants';
 import type { PhoneInputProps } from './PhoneInput.types';
-import {
-  callingCodePerCountryCode,
-  ensurePlusPrefix,
-  getFullMaskPhoneNumber,
-} from './utils';
+import { ensurePlusPrefix, getFullMaskPhoneNumber } from './utils';
 
 export const usePhoneInput = ({
   defaultValues,
   value,
   onChangeCountry,
-  onChangeFormattedText,
   onChangeText,
 }: PhoneInputProps) => {
   const [callingCode, setCallingCode] = useState<CallingCode>(
@@ -54,9 +50,8 @@ export const usePhoneInput = ({
       setCallingCode(newCallingCode);
       setMask(getFullMaskPhoneNumber(newCallingCode, country.cca2));
       onChangeCountry?.(country);
-      onChangeFormattedText?.(phoneNumber);
     },
-    [onChangeCountry, onChangeFormattedText, phoneNumber]
+    [onChangeCountry]
   );
 
   const handleChangeText = useCallback(
@@ -65,9 +60,8 @@ export const usePhoneInput = ({
       updateCountryOnType(text);
       setPhoneNumber(text);
       onChangeText?.(text);
-      onChangeFormattedText?.(text);
     },
-    [updateCountryOnType, onChangeText, onChangeFormattedText]
+    [updateCountryOnType, onChangeText]
   );
 
   return {
