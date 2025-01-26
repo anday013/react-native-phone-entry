@@ -2,7 +2,7 @@
   "name": "react-native-phone-entry",
   "version": "0.1.0",
   "description": "Simple and fully modifiable Phone Number Input Component for React Native",
-  "source": "./src/index.tsx",
+  "source": "./src/index.ts",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "exports": {
