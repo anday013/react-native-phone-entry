@@ -4,6 +4,7 @@ import {
   type CountryCode,
 } from 'react-native-country-picker-modal';
 import type { PhoneInputProps } from './PhoneInput.types';
+import { ensurePlusPrefix, getFullPhoneNumber } from './utils';
 
 export const usePhoneInput = ({
   defaultCode,
@@ -13,8 +14,8 @@ export const usePhoneInput = ({
   onChangeFormattedText,
   onChangeText,
 }: PhoneInputProps) => {
-  const [code, setCode] = useState<string | undefined>(
-    defaultCode ? undefined : '994'
+  const [callingCode, setCallingCode] = useState<string | undefined>(
+    defaultCode ? undefined : '+994'
   );
   const [phoneNumber, setPhoneNumber] = useState<string>(
     value || defaultValue || ''
@@ -26,12 +27,15 @@ export const usePhoneInput = ({
 
   const onSelect = useCallback(
     (country: Country) => {
-      console.log('ON COUNTRY SELECT CALLED');
+      console.log('ON COUNTRY SELECT CALLED', country);
+      const newCallingCode = country.callingCode[0];
       setCountryCode(country.cca2);
-      setCode(country.callingCode[0]);
+      setCallingCode(ensurePlusPrefix(newCallingCode));
       onChangeCountry?.(country);
-      if (country.callingCode[0]) {
-        onChangeFormattedText?.(`+${country.callingCode[0]}${phoneNumber}`);
+      if (newCallingCode) {
+        onChangeFormattedText?.(
+          getFullPhoneNumber(newCallingCode, phoneNumber)
+        );
       } else {
         onChangeFormattedText?.(phoneNumber);
       }
@@ -43,19 +47,21 @@ export const usePhoneInput = ({
     (_masked: string, unmasked: string, _obfuscated: string) => {
       setPhoneNumber(unmasked);
       onChangeText?.(unmasked);
-      if (code) {
+      if (callingCode) {
         onChangeFormattedText?.(
-          unmasked.length > 0 ? `+${code}${unmasked}` : unmasked
+          unmasked.length > 0
+            ? getFullPhoneNumber(callingCode, unmasked)
+            : unmasked
         );
       } else {
         onChangeFormattedText?.(unmasked);
       }
     },
-    [onChangeText, onChangeFormattedText, code]
+    [onChangeText, onChangeFormattedText, callingCode]
   );
 
   return {
-    models: { countryCode, code, phoneNumber },
+    models: { countryCode, callingCode, phoneNumber },
     actions: { onSelect, handleChangeText },
     forms: { modalVisible, setModalVisible },
   };

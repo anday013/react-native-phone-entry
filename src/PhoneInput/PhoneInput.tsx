@@ -17,7 +17,7 @@ const dropDown =
 
 export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
   const {
-    models: { code, countryCode, phoneNumber },
+    models: { callingCode, countryCode, phoneNumber },
     actions: { handleChangeText, onSelect },
     forms: { modalVisible, setModalVisible },
   } = usePhoneInput(props);
@@ -99,15 +99,15 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             onClose={() => setModalVisible(false)}
             {...countryPickerProps}
           />
-          {code && layout === 'second' && (
-            <Text style={[styles.codeText, codeTextStyle]}>{`+${code}`}</Text>
+          {callingCode && layout === 'second' && (
+            <Text style={[styles.codeText, codeTextStyle]}>{callingCode}</Text>
           )}
           {!disableArrowIcon &&
             (renderDropdownImage || <>{_renderDropdownImage}</>)}
         </TouchableOpacity>
         <View style={[styles.textContainer, textContainerStyle]}>
-          {code && layout === 'first' && (
-            <Text style={[styles.codeText, codeTextStyle]}>{`+${code}`}</Text>
+          {callingCode && layout === 'first' && (
+            <Text style={[styles.codeText, codeTextStyle]}>{callingCode}</Text>
           )}
           <MaskInput
             style={[styles.numberText, textInputStyle]}

@@ -13,6 +13,22 @@ export const isValidNumber = (number: string, countryCode: string): boolean => {
   }
 };
 
+export const ensurePlusPrefix = (number?: string): string => {
+  if (!number) return '';
+
+  if (number.startsWith('+')) {
+    return number;
+  }
+  return `+${number}`;
+};
+
+export const getFullPhoneNumber = (
+  prefix: string,
+  phoneNumber: string
+): string => {
+  return `${ensurePlusPrefix(prefix)}${phoneNumber}`;
+};
+
 export const maskPerCountry: { [key in CountryCode]: Mask } = {
   BQ: ['+', '5', '9', '9', '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
   BV: ['+', '4', '7', '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
