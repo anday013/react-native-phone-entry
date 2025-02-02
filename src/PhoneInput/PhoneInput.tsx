@@ -18,7 +18,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
   const {
     models: { countryCode, phoneNumber, mask, inputRef },
     actions: { handleChangeText, onSelect },
-    forms: { modalVisible, setModalVisible },
+    forms: { modalVisible, showModal, hideModal },
   } = usePhoneInput(props);
 
   const {
@@ -40,9 +40,9 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
   } = props;
 
   const _renderDropdownImage = useMemo(() => {
-    // return <DropdownIcon style={styles.dropDownImage} />;
     return (
       <Image
+        testID="dropdown-icon"
         source={{ uri: dropDown }}
         resizeMode="contain"
         style={styles.dropDownImage}
@@ -60,6 +60,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
   return (
     <CountryModalProvider>
       <View
+        testID="phone-input-container"
         style={[
           styles.container,
           withShadow ? styles.shadow : {},
@@ -67,13 +68,14 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
         ]}
       >
         <TouchableOpacity
+          testID="country-picker-button"
           style={[
             styles.flagButtonView,
             flagButtonStyle,
             countryPickerButtonStyle,
           ]}
           disabled={disabled}
-          onPress={() => setModalVisible(true)}
+          onPress={showModal}
         >
           <CountryPicker
             onSelect={onSelect}
@@ -87,7 +89,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             visible={modalVisible}
             theme={withDarkTheme ? DARK_THEME : DEFAULT_THEME}
             renderFlagButton={renderFlagButton}
-            onClose={() => setModalVisible(false)}
+            onClose={hideModal}
             {...countryPickerProps}
           />
           {!disableArrowIcon &&
@@ -95,6 +97,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
         </TouchableOpacity>
         <View style={styles.textInputWrapper}>
           <MaskInput
+            testID="phone-input"
             ref={(ref) => {
               inputRef.current = ref;
             }}

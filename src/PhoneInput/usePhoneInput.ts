@@ -31,6 +31,9 @@ export const usePhoneInput = ({
     getFullMaskPhoneNumber(callingCode, countryCode)
   );
 
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
+
   const updateCountryOnType = useCallback((inputText: string) => {
     if (callingCodePerCountryCode?.[inputText]) {
       setCallingCode(inputText);
@@ -71,6 +74,6 @@ export const usePhoneInput = ({
       inputRef,
     },
     actions: { onSelect, handleChangeText, setMask },
-    forms: { modalVisible, setModalVisible },
+    forms: { modalVisible, showModal, hideModal },
   };
 };
