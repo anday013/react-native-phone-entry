@@ -21,7 +21,6 @@
 ## TODO
 
 - [ ] Add unit tests
-- [ ] Fix Android issue
 - [ ] Add Error state
 - [ ] Make fully customizable
 

@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     borderColor: '#E5E7EB',
   },
   flagButtonView: {
-    width: wp(22),
-    height: '100%',
+    width: '25%',
+    // height: '100%',
     minWidth: 40,
     justifyContent: 'center',
     flexDirection: 'row',
@@ -32,9 +32,6 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: '#E5E7EB',
     paddingHorizontal: 8,
-  },
-  flagButtonExtraWidth: {
-    width: wp(25),
   },
   shadow: {
     shadowColor: '#000000',
@@ -50,16 +47,8 @@ const styles = StyleSheet.create({
     height: 16,
     width: 16,
     marginLeft: 4,
-    opacity: 0.6,
-  },
-  textContainer: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(1.5),
-    textAlign: 'left',
-    flexDirection: 'row',
-    alignItems: 'center',
+    opacity: 0.9,
+    // backgroundColor: 'red',
   },
   codeText: {
     fontSize: 15,
@@ -68,11 +57,23 @@ const styles = StyleSheet.create({
     color: '#374151',
     letterSpacing: 0.3,
   },
+  textInputWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingHorizontal: wp(4),
+  },
   numberText: {
+    flex: 1,
     fontSize: 15,
     color: '#1F2937',
-    flex: 1,
     letterSpacing: 0.3,
+    backgroundColor: '#FFFFFF',
+
+    textAlign: 'left',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

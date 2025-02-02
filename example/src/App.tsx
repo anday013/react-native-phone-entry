@@ -7,7 +7,9 @@ export default function App() {
       <PhoneInput
         onChangeCountry={(country) => console.log('country changed:', country)}
         onChangeText={(text) => console.log('text changed:', text)}
-        withShadow
+        theme={{
+          withShadow: true,
+        }}
       />
     </View>
   );

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import CountryPicker, {
   CountryModalProvider,
   DARK_THEME,
@@ -16,32 +16,31 @@ const dropDown =
 
 export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
   const {
-    models: { callingCode, countryCode, phoneNumber, mask },
+    models: { countryCode, phoneNumber, mask, inputRef },
     actions: { handleChangeText, onSelect },
     forms: { modalVisible, setModalVisible },
   } = usePhoneInput(props);
 
   const {
-    withShadow,
-    withDarkTheme,
-    codeTextStyle,
+    theme: {
+      withDarkTheme,
+      withShadow,
+      textInputStyle,
+      flagButtonStyle,
+      containerStyle,
+      countryPickerButtonStyle,
+    } = {},
     maskInputProps,
-    textInputStyle,
     autoFocus,
-    placeholder = 'Phone Number',
     disableArrowIcon,
-    flagButtonStyle,
-    containerStyle,
-    textContainerStyle,
     renderDropdownImage,
-    countryPickerProps = {},
-    filterProps = {},
-    countryPickerButtonStyle,
-    layout = 'first',
+    countryPickerProps,
+    flagProps,
     disabled,
   } = props;
 
   const _renderDropdownImage = useMemo(() => {
+    // return <DropdownIcon style={styles.dropDownImage} />;
     return (
       <Image
         source={{ uri: dropDown }}
@@ -51,18 +50,12 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
     );
   }, []);
 
-  const renderFlagButton = useCallback(
-    (flagProps: any) => {
-      const flagSize = countryPickerProps.flagSize || DEFAULT_THEME.flagSize;
-      if (layout === 'first') {
-        return (
-          <Flag countryCode={countryCode} flagSize={flagSize} {...flagProps} />
-        );
-      }
-      return <View />;
-    },
-    [countryCode, countryPickerProps.flagSize, layout]
-  );
+  const renderFlagButton = useCallback(() => {
+    const flagSize = flagProps?.flagSize || DEFAULT_THEME.flagSize;
+    return (
+      <Flag countryCode={countryCode} flagSize={flagSize} {...flagProps} />
+    );
+  }, [countryCode, flagProps]);
 
   return (
     <CountryModalProvider>
@@ -76,7 +69,6 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
         <TouchableOpacity
           style={[
             styles.flagButtonView,
-            layout === 'second' ? styles.flagButtonExtraWidth : {},
             flagButtonStyle,
             countryPickerButtonStyle,
           ]}
@@ -88,7 +80,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             withEmoji
             withFilter
             withFlag
-            filterProps={filterProps}
+            filterProps={countryPickerProps?.filterProps}
             countryCode={countryCode}
             withCallingCode
             disableNativeModal={disabled}
@@ -98,17 +90,16 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             onClose={() => setModalVisible(false)}
             {...countryPickerProps}
           />
-          {callingCode && layout === 'second' && (
-            <Text style={[styles.codeText, codeTextStyle]}>{callingCode}</Text>
-          )}
           {!disableArrowIcon &&
             (renderDropdownImage || <>{_renderDropdownImage}</>)}
         </TouchableOpacity>
-        <View style={[styles.textContainer, textContainerStyle]}>
+        <View style={styles.textInputWrapper}>
           <MaskInput
+            ref={(ref) => {
+              inputRef.current = ref;
+            }}
             style={[styles.numberText, textInputStyle]}
             mask={mask}
-            placeholder={placeholder}
             onChangeText={handleChangeText}
             value={phoneNumber}
             editable={!disabled}

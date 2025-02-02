@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
+import type { TextInput } from 'react-native';
 import {
   type CallingCode,
   type Country,
@@ -15,11 +16,12 @@ export const usePhoneInput = ({
   onChangeCountry,
   onChangeText,
 }: PhoneInputProps) => {
+  const inputRef = useRef<TextInput | null>();
   const [callingCode, setCallingCode] = useState<CallingCode>(
     defaultValues?.callingCode || '+994'
   ); // TODO: Get rid of calling code in the future
   const [phoneNumber, setPhoneNumber] = useState<string>(
-    value || defaultValues?.phoneNumber || ''
+    value || defaultValues?.phoneNumber || '+994'
   );
   const [modalVisible, setModalVisible] = useState(false);
   const [countryCode, setCountryCode] = useState<CountryCode>(
@@ -28,11 +30,6 @@ export const usePhoneInput = ({
   const [mask, setMask] = useState<Mask>(
     getFullMaskPhoneNumber(callingCode, countryCode)
   );
-
-  useEffect(() => {
-    setPhoneNumber(callingCode);
-    console.log('callingCode changed', callingCode);
-  }, [callingCode]);
 
   const updateCountryOnType = useCallback((inputText: string) => {
     if (callingCodePerCountryCode?.[inputText]) {
@@ -48,6 +45,7 @@ export const usePhoneInput = ({
       const newCallingCode = ensurePlusPrefix(country.callingCode[0]);
       setCountryCode(country.cca2);
       setCallingCode(newCallingCode);
+      setPhoneNumber(newCallingCode);
       setMask(getFullMaskPhoneNumber(newCallingCode, country.cca2));
       onChangeCountry?.(country);
     },
@@ -65,7 +63,13 @@ export const usePhoneInput = ({
   );
 
   return {
-    models: { countryCode, callingCode, phoneNumber, mask },
+    models: {
+      countryCode,
+      callingCode,
+      phoneNumber,
+      mask,
+      inputRef,
+    },
     actions: { onSelect, handleChangeText, setMask },
     forms: { modalVisible, setModalVisible },
   };

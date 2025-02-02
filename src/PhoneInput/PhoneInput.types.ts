@@ -3,13 +3,13 @@ import type {
   CallingCode,
   Country,
   CountryCode,
+  Flag,
 } from 'react-native-country-picker-modal';
-import type { CountryFilterProps } from 'react-native-country-picker-modal/lib/CountryFilter';
+import CountryPicker from 'react-native-country-picker-modal';
+
 import type { MaskInputProps } from 'react-native-mask-input';
 
 export type PhoneInputProps = {
-  withDarkTheme?: boolean;
-  withShadow?: boolean;
   autoFocus?: boolean;
   value?: string;
   defaultValues?: {
@@ -19,18 +19,20 @@ export type PhoneInputProps = {
   };
   disabled?: boolean;
   disableArrowIcon?: boolean;
-  placeholder?: string;
   onChangeCountry?: (country: Country) => void;
   onChangeText?: (text: string) => void;
   renderDropdownImage?: JSX.Element;
-  containerStyle?: StyleProp<ViewStyle>;
-  textContainerStyle?: StyleProp<ViewStyle>;
+  theme?: Theme;
   maskInputProps?: MaskInputProps;
+  countryPickerProps?: Parameters<typeof CountryPicker>[0];
+  flagProps?: Parameters<typeof Flag>[0];
+};
+interface Theme {
+  containerStyle?: StyleProp<ViewStyle>;
   textInputStyle?: StyleProp<TextStyle>;
   codeTextStyle?: StyleProp<TextStyle>;
   flagButtonStyle?: StyleProp<ViewStyle>;
   countryPickerButtonStyle?: StyleProp<ViewStyle>;
-  layout?: 'first' | 'second';
-  filterProps?: CountryFilterProps;
-  countryPickerProps?: any;
-};
+  withDarkTheme?: boolean;
+  withShadow?: boolean;
+}

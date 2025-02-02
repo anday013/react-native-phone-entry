@@ -84,6 +84,7 @@
     "react-native-builder-bob": "^0.35.2",
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-mask-input": "^1.2.3",
+    "react-native-svg": "^15.11.1",
     "release-it": "^17.10.0",
     "typescript": "^5.2.2"
   },
