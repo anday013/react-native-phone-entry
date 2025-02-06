@@ -39,6 +39,7 @@
   "scripts": {
     "example": "yarn workspace react-native-phone-entry-example",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:coverage": "jest --collectCoverage --coverageDirectory=\"./coverage\"",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",

@@ -26,6 +26,7 @@ export type PhoneInputProps = {
   maskInputProps?: MaskInputProps;
   countryPickerProps?: Parameters<typeof CountryPicker>[0];
   flagProps?: Parameters<typeof Flag>[0];
+  callingCodeEditable?: boolean;
 };
 interface Theme {
   containerStyle?: StyleProp<ViewStyle>;

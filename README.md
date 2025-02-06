@@ -10,17 +10,17 @@
 
 - 🌍 International phone number input with country picker
 - 📱 Automatic phone number formatting based on country
+- 🔍 Dynamic country and mask adaptation based on typed country code
 - ✨ Highly customizable appearance and styling
 - 🎯 Phone number validation using Google's libphonenumber
-- 📦 Easy integration with React Native projects
-- 🔍 Country search functionality
 - 🎨 Dark theme support
 - ♿ Accessibility support
 - 💪 Written in TypeScript
 
 ## TODO
 
-- [ ] Add unit tests
+- [ ] Fix defaultProp issue with picker library
+- [ ] Make similar UI with OTP lib
 - [ ] Add Error state
 - [ ] Make fully customizable
 

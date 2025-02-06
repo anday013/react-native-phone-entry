@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     height: hp(7),
     minHeight: 56,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#DFDFDE',
   },
   flagButtonView: {
     width: '25%',
