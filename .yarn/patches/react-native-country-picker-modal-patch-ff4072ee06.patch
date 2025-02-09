@@ -1,0 +1,19 @@
+diff --git a/lib/CountryModal.js b/lib/CountryModal.js
+index fe3f108ba07df67bd3571561affe5d31ba140f3f..8806a363eee4091d2fe68eb00359a4c1e5690b03 100644
+--- a/lib/CountryModal.js
++++ b/lib/CountryModal.js
+@@ -17,8 +17,13 @@ export const CountryModal = ({
+     disableNativeModal = false,
+     animationType = 'slide',
+     animated = true,
+-    ...props
++    ...rest
+ }) => {
++    const props = {
++        animationType,
++        animated,
++        ...rest
++    };
+     const { backgroundColor } = useTheme();
+     const { teleport } = React.useContext(CountryModalContext);
+ 

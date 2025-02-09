@@ -12329,7 +12329,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-country-picker-modal@npm:^2.0.0":
+"react-native-country-picker-modal@npm:2.0.0":
   version: 2.0.0
   resolution: "react-native-country-picker-modal@npm:2.0.0"
   dependencies:
@@ -12345,6 +12345,44 @@ __metadata:
     react-native: "*"
     react-native-web: "*"
   checksum: e808169b45c5e8021462a6914f7c3fb28e84ae8d58097ed7b3418fee41efa2bc44012abc09ff3f3bd6ee14427b9efe1b0f8d8b3a19cc01325b2f2cd0137d5d00
+  languageName: node
+  linkType: hard
+
+"react-native-country-picker-modal@patch:react-native-country-picker-modal@npm%3A2.0.0#./.yarn/patches/react-native-country-picker-modal-npm-2.0.0-ffda15a759.patch::version=2.0.0&hash=4dbe83&locator=react-native-phone-entry%40workspace%3A.":
+  version: 2.0.0
+  resolution: "react-native-country-picker-modal@patch:react-native-country-picker-modal@npm%3A2.0.0#./.yarn/patches/react-native-country-picker-modal-npm-2.0.0-ffda15a759.patch::version=2.0.0&hash=4dbe83&locator=react-native-phone-entry%40workspace%3A."
+  dependencies:
+    "@callstack/react-theme-provider": 3.0.3
+    fuse.js: 3.4.5
+    modal-react-native-web: 0.2.0
+    node-emoji: 1.10.0
+    prop-types: 15.7.2
+    react-async-hook: 3.6.1
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+    react-native: "*"
+    react-native-web: "*"
+  checksum: d5978609d83d1aa9482d9fe21c7c5c5f8e32e6c1c13e0dd5dcbf8ab8b3a43f5b51a0a192705f788d843c3647fa54cfaf56a141b015b7f4d5f5cb5cf9a187340f
+  languageName: node
+  linkType: hard
+
+"react-native-country-picker-modal@patch:react-native-country-picker-modal@patch%3Areact-native-country-picker-modal@npm%253A2.0.0%23./.yarn/patches/react-native-country-picker-modal-npm-2.0.0-ffda15a759.patch%3A%3Aversion=2.0.0&hash=4dbe83&locator=react-native-phone-entry%2540workspace%253A.#./.yarn/patches/react-native-country-picker-modal-patch-ff4072ee06.patch::locator=react-native-phone-entry%40workspace%3A.":
+  version: 2.0.0
+  resolution: "react-native-country-picker-modal@patch:react-native-country-picker-modal@patch%3Areact-native-country-picker-modal@npm%253A2.0.0%23./.yarn/patches/react-native-country-picker-modal-npm-2.0.0-ffda15a759.patch%3A%3Aversion=2.0.0&hash=4dbe83&locator=react-native-phone-entry%2540workspace%253A.#./.yarn/patches/react-native-country-picker-modal-patch-ff4072ee06.patch::version=2.0.0&hash=ffd6d8&locator=react-native-phone-entry%40workspace%3A."
+  dependencies:
+    "@callstack/react-theme-provider": 3.0.3
+    fuse.js: 3.4.5
+    modal-react-native-web: 0.2.0
+    node-emoji: 1.10.0
+    prop-types: 15.7.2
+    react-async-hook: 3.6.1
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+    react-native: "*"
+    react-native-web: "*"
+  checksum: e056f50b9a675c2ca207af6b98b1d48cafa47fb728a200e3e61574bcbcd371a9d15e013c8f3d51c9a210ee82faa599cd74cc5cdcacc763fa947989999c48dcbe
   languageName: node
   linkType: hard
 

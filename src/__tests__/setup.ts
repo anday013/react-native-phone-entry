@@ -32,6 +32,9 @@ jest.mock('react-native', () => ({
   Image: 'Image',
   TouchableOpacity: 'TouchableOpacity',
   View: 'View',
+  Appearance: {
+    getColorScheme: jest.fn().mockReturnValue('light'),
+  },
   StyleSheet: {
     create: (styles: any) => styles,
     flatten: (style: any) => {

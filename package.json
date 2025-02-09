@@ -100,7 +100,8 @@
   },
   "resolutions": {
     "@types/react": "^18.2.44",
-    "react-async-hook@3.6.1": "patch:react-async-hook@npm%3A3.6.1#./.yarn/patches/react-async-hook-npm-3.6.1-a3be76c38b.patch"
+    "react-async-hook@3.6.1": "patch:react-async-hook@npm%3A3.6.1#./.yarn/patches/react-async-hook-npm-3.6.1-a3be76c38b.patch",
+    "react-native-country-picker-modal@^2.0.0": "patch:react-native-country-picker-modal@patch%3Areact-native-country-picker-modal@npm%253A2.0.0%23./.yarn/patches/react-native-country-picker-modal-npm-2.0.0-ffda15a759.patch%3A%3Aversion=2.0.0&hash=4dbe83&locator=react-native-phone-entry%2540workspace%253A.#./.yarn/patches/react-native-country-picker-modal-patch-ff4072ee06.patch"
   },
   "peerDependencies": {
     "react": "*",

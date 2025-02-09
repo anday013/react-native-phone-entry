@@ -1,0 +1,446 @@
+diff --git a/lib/AnimatedModal.js b/lib/AnimatedModal.js
+index 01f04081c469f67b3e09b85dc2432b9b3a07bc88..5d19ac72b009fa9803a2b8930a35b65bdc56410a 100644
+--- a/lib/AnimatedModal.js
++++ b/lib/AnimatedModal.js
+@@ -1,9 +1,10 @@
+ import * as React from 'react';
+ import { Animated, Dimensions, StyleSheet } from 'react-native';
++
+ const { height } = Dimensions.get('window');
+ const duration = 300;
+ const useNativeDriver = true;
+-export const AnimatedModal = ({ children, visible }) => {
++export const AnimatedModal = ({ children, visible = false }) => {
+     const translateY = new Animated.Value(height);
+     const showModal = Animated.timing(translateY, {
+         toValue: 0,
+@@ -15,6 +16,7 @@ export const AnimatedModal = ({ children, visible }) => {
+         duration,
+         useNativeDriver,
+     }).start;
++
+     React.useEffect(() => {
+         if (visible) {
+             showModal();
+@@ -23,13 +25,16 @@ export const AnimatedModal = ({ children, visible }) => {
+             hideModal();
+         }
+     }, [visible]);
+-    return (React.createElement(Animated.View, { style: {
+-            ...StyleSheet.absoluteFillObject,
+-            transform: [{ translateY }],
+-            zIndex: 99,
+-        } }, children));
+-};
+-AnimatedModal.defaultProps = {
+-    visible: false,
++
++    return (
++        React.createElement(Animated.View, {
++            style: {
++                ...StyleSheet.absoluteFillObject,
++                transform: [{ translateY }],
++                zIndex: 99,
++            }
++        }, children)
++    );
+ };
++
+ //# sourceMappingURL=AnimatedModal.js.map
+\ No newline at end of file
+diff --git a/lib/CountryFilter.js b/lib/CountryFilter.js
+index 28b0dc44014d2c754eca993dfd90c0763a6d90ae..e6e9a04a9cad6837b3ca951feda88122f1a0433a 100644
+--- a/lib/CountryFilter.js
++++ b/lib/CountryFilter.js
+@@ -1,5 +1,5 @@
+ import React from 'react';
+-import { TextInput, StyleSheet, Platform } from 'react-native';
++import { Platform, StyleSheet, TextInput } from 'react-native';
+ import { useTheme } from './CountryTheme';
+ const styles = StyleSheet.create({
+     input: {
+@@ -14,15 +14,11 @@ const styles = StyleSheet.create({
+         })
+     }
+ });
+-export const CountryFilter = (props) => {
++export const CountryFilter = ({ autoFocus = false, placeholder = 'Enter country name',...props}) => {
+     const { filterPlaceholderTextColor, fontFamily, fontSize, onBackgroundTextColor } = useTheme();
+     return (React.createElement(TextInput, Object.assign({ testID: "text-input-country-filter", autoCorrect: false, placeholderTextColor: filterPlaceholderTextColor, style: [
+             styles.input,
+             { fontFamily, fontSize, color: onBackgroundTextColor }
+-        ] }, props)));
+-};
+-CountryFilter.defaultProps = {
+-    autoFocus: false,
+-    placeholder: 'Enter country name'
++        ], autoFocus, placeholder }, props)));
+ };
+ //# sourceMappingURL=CountryFilter.js.map
+\ No newline at end of file
+diff --git a/lib/CountryList.js b/lib/CountryList.js
+index 8816018c4dac1c3403a97ae9c5405abc6c6d96b3..4954d8004cb8fb4d90cd364191e8528e138b878b 100644
+--- a/lib/CountryList.js
++++ b/lib/CountryList.js
+@@ -1,9 +1,9 @@
+-import React, { useRef, memo, useState, useEffect } from 'react';
+-import { StyleSheet, View, FlatList, ScrollView, TouchableOpacity, PixelRatio, Dimensions, } from 'react-native';
+-import { useTheme } from './CountryTheme';
+-import { Flag } from './Flag';
++import React, { memo, useEffect, useRef, useState } from 'react';
++import { Dimensions, FlatList, PixelRatio, ScrollView, StyleSheet, TouchableOpacity, View, } from 'react-native';
+ import { useContext } from './CountryContext';
+ import { CountryText } from './CountryText';
++import { useTheme } from './CountryTheme';
++import { Flag } from './Flag';
+ const borderBottomWidth = 2 / PixelRatio.get();
+ const styles = StyleSheet.create({
+     container: {
+@@ -51,7 +51,7 @@ const Letter = ({ letter, scrollTo }) => {
+ };
+ const CountryItem = (props) => {
+     const { activeOpacity, itemHeight, flagSize } = useTheme();
+-    const { country, onSelect, withFlag, withEmoji, withCallingCode, withCurrency, } = props;
++    const { country, onSelect, withFlag = true, withEmoji, withCallingCode = false, withCurrency, } = props;
+     const extraContent = [];
+     if (withCallingCode &&
+         country.callingCode &&
+@@ -69,10 +69,7 @@ const CountryItem = (props) => {
+                     country.name,
+                     extraContent.length > 0 && ` (${extraContent.join(', ')})`)))));
+ };
+-CountryItem.defaultProps = {
+-    withFlag: true,
+-    withCallingCode: false,
+-};
++
+ const MemoCountryItem = memo(CountryItem);
+ const renderItem = (props) => ({ item: country, }) => (React.createElement(MemoCountryItem, Object.assign({}, { country, ...props })));
+ const keyExtractor = (item) => item.cca2;
+@@ -82,7 +79,7 @@ const ItemSeparatorComponent = () => {
+ };
+ const { height } = Dimensions.get('window');
+ export const CountryList = (props) => {
+-    const { data, withAlphaFilter, withEmoji, withFlag, withCallingCode, withCurrency, onSelect, filter, flatListProps, filterFocus, } = props;
++    const { data, withAlphaFilter, withEmoji, withFlag, withCallingCode, withCurrency, onSelect, filter, flatListProps, filterFocus = undefined, } = props;
+     const flatListRef = useRef(null);
+     const [letter, setLetter] = useState('');
+     const { itemHeight, backgroundColor } = useTheme();
+@@ -130,7 +127,4 @@ export const CountryList = (props) => {
+         }, flatListProps)),
+         withAlphaFilter && (React.createElement(ScrollView, { contentContainerStyle: styles.letters, keyboardShouldPersistTaps: 'always' }, letters.map(letter => (React.createElement(Letter, Object.assign({ key: letter }, { letter, scrollTo }))))))));
+ };
+-CountryList.defaultProps = {
+-    filterFocus: undefined,
+-};
+ //# sourceMappingURL=CountryList.js.map
+\ No newline at end of file
+diff --git a/lib/CountryModal.js b/lib/CountryModal.js
+index 1678e956547e65a3357825315bb7ac2668298abc..fe3f108ba07df67bd3571561affe5d31ba140f3f 100644
+--- a/lib/CountryModal.js
++++ b/lib/CountryModal.js
+@@ -1,23 +1,39 @@
+ import * as React from 'react';
+-import { SafeAreaView, StyleSheet, Platform } from 'react-native';
++import { Platform, SafeAreaView, StyleSheet } from 'react-native';
+ import { AnimatedModal } from './AnimatedModal';
+-import { Modal } from './Modal';
+-import { useTheme } from './CountryTheme';
+ import { CountryModalContext } from './CountryModalProvider';
++import { useTheme } from './CountryTheme';
++import { Modal } from './Modal';
++
+ const styles = StyleSheet.create({
+     container: {
+         flex: 1,
+     },
+ });
+-export const CountryModal = ({ children, withModal, disableNativeModal, ...props }) => {
++
++export const CountryModal = ({
++    children,
++    withModal = true,
++    disableNativeModal = false,
++    animationType = 'slide',
++    animated = true,
++    ...props
++}) => {
+     const { backgroundColor } = useTheme();
+     const { teleport } = React.useContext(CountryModalContext);
+-    const content = (React.createElement(SafeAreaView, { style: [styles.container, { backgroundColor }] }, children));
++
++    const content = (
++        React.createElement(SafeAreaView, {
++            style: [styles.container, { backgroundColor }]
++        }, children)
++    );
++
+     React.useEffect(() => {
+         if (disableNativeModal) {
+             teleport(React.createElement(AnimatedModal, Object.assign({}, props), content));
+         }
+     }, [disableNativeModal]);
++
+     if (withModal) {
+         if (Platform.OS === 'web') {
+             return React.createElement(Modal, Object.assign({}, props), content);
+@@ -27,12 +43,7 @@ export const CountryModal = ({ children, withModal, disableNativeModal, ...props
+         }
+         return React.createElement(Modal, Object.assign({}, props), content);
+     }
++
+     return content;
+ };
+-CountryModal.defaultProps = {
+-    animationType: 'slide',
+-    animated: true,
+-    withModal: true,
+-    disableNativeModal: false,
+-};
+ //# sourceMappingURL=CountryModal.js.map
+\ No newline at end of file
+diff --git a/lib/CountryPicker.js b/lib/CountryPicker.js
+index c4ba18ec9d4adb6afcfe5161304adb73bf79601e..bdb55f8681e70acb5cfe38ea9c7cac5313c0e452 100644
+--- a/lib/CountryPicker.js
++++ b/lib/CountryPicker.js
+@@ -1,15 +1,15 @@
+-import React, { useState, useEffect } from 'react';
++import React, { useEffect, useState } from 'react';
++import { useContext } from './CountryContext';
++import { CountryFilter } from './CountryFilter';
++import { CountryList } from './CountryList';
+ import { CountryModal } from './CountryModal';
++import { FlagButton } from './FlagButton';
+ import { HeaderModal } from './HeaderModal';
+ import { FlagType } from './types';
+-import { CountryFilter } from './CountryFilter';
+-import { FlagButton } from './FlagButton';
+-import { useContext } from './CountryContext';
+-import { CountryList } from './CountryList';
+ const renderFlagButton = (props) => props.renderFlagButton ? (props.renderFlagButton(props)) : (React.createElement(FlagButton, Object.assign({}, props)));
+ const renderFilter = (props) => props.renderCountryFilter ? (props.renderCountryFilter(props)) : (React.createElement(CountryFilter, Object.assign({}, props)));
+ export const CountryPicker = (props) => {
+-    const { countryCode, region, subregion, countryCodes, renderFlagButton: renderButton, renderCountryFilter, filterProps, modalProps, flatListProps, onSelect, withEmoji, withFilter, withCloseButton, withCountryNameButton, withCallingCodeButton, withCurrencyButton, containerButtonStyle, withAlphaFilter, withCallingCode, withCurrency, withFlag, withModal, disableNativeModal, withFlagButton, onClose: handleClose, onOpen: handleOpen, closeButtonImage, closeButtonStyle, closeButtonImageStyle, excludeCountries, placeholder, preferredCountries } = props;
++    const { countryCode, region, subregion, countryCodes, renderFlagButton: renderButton, renderCountryFilter, filterProps, modalProps, flatListProps, onSelect, withEmoji, withFilter, withCloseButton, withCountryNameButton, withCallingCodeButton, withCurrencyButton, containerButtonStyle, withAlphaFilter = false, withCallingCode = false, withCurrency, withFlag, withModal = true, disableNativeModal, withFlagButton, onClose: handleClose, onOpen: handleOpen, closeButtonImage, closeButtonStyle, closeButtonImageStyle, excludeCountries, placeholder = 'Select Country', preferredCountries } = props;
+     const [state, setState] = useState({
+         visible: props.visible || false,
+         countries: [],
+@@ -93,10 +93,4 @@ export const CountryPicker = (props) => {
+                 flatListProps,
+             })))));
+ };
+-CountryPicker.defaultProps = {
+-    withModal: true,
+-    withAlphaFilter: false,
+-    withCallingCode: false,
+-    placeholder: 'Select Country',
+-};
+ //# sourceMappingURL=CountryPicker.js.map
+\ No newline at end of file
+diff --git a/lib/Flag.js b/lib/Flag.js
+index b97495056b3a42e6f57ebc156fb54ae74d4947f9..089040429514297016088602c8fc7bd457cf658c 100644
+--- a/lib/Flag.js
++++ b/lib/Flag.js
+@@ -1,8 +1,8 @@
+ import React, { memo } from 'react';
+-import { Emoji } from './Emoji';
+-import { useContext } from './CountryContext';
+ import { useAsync } from 'react-async-hook';
+-import { Image, StyleSheet, PixelRatio, Text, View, ActivityIndicator, } from 'react-native';
++import { ActivityIndicator, Image, PixelRatio, StyleSheet, Text, View, } from 'react-native';
++import { useContext } from './CountryContext';
++import { Emoji } from './Emoji';
+ const styles = StyleSheet.create({
+     container: {
+         justifyContent: 'center',
+@@ -45,9 +45,5 @@ const EmojiFlag = memo(({ countryCode, flagSize }) => {
+     return (React.createElement(Text, { style: [styles.emojiFlag, { fontSize: flagSize }], allowFontScaling: false },
+         React.createElement(Emoji, Object.assign({}, { name: asyncResult.result }))));
+ });
+-export const Flag = ({ countryCode, withEmoji, withFlagButton, flagSize, }) => withFlagButton ? (React.createElement(View, { style: styles.container }, withEmoji ? (React.createElement(EmojiFlag, Object.assign({}, { countryCode, flagSize }))) : (React.createElement(ImageFlag, Object.assign({}, { countryCode, flagSize }))))) : null;
+-Flag.defaultProps = {
+-    withEmoji: true,
+-    withFlagButton: true,
+-};
++export const Flag = ({ countryCode, withEmoji = true, withFlagButton = true, flagSize, }) => withFlagButton ? (React.createElement(View, { style: styles.container }, withEmoji ? (React.createElement(EmojiFlag, Object.assign({}, { countryCode, flagSize }))) : (React.createElement(ImageFlag, Object.assign({}, { countryCode, flagSize }))))) : null;
+ //# sourceMappingURL=Flag.js.map
+\ No newline at end of file
+diff --git a/lib/FlagButton.js b/lib/FlagButton.js
+index 7ad3e7b7f3d9f5ea02c0500f0ed5187655873f1f..a710161b5eccec6614d1344df04d14679730ab20 100644
+--- a/lib/FlagButton.js
++++ b/lib/FlagButton.js
+@@ -1,9 +1,10 @@
+-import React, { useState, useEffect, memo } from 'react';
+-import { TouchableOpacity, StyleSheet, View, } from 'react-native';
+-import { Flag } from './Flag';
++import React, { memo, useEffect, useState } from 'react';
++import { StyleSheet, TouchableOpacity, View } from 'react-native';
+ import { useContext } from './CountryContext';
+ import { CountryText } from './CountryText';
+ import { useTheme } from './CountryTheme';
++import { Flag } from './Flag';
++
+ const styles = StyleSheet.create({
+     container: {
+         alignItems: 'flex-start',
+@@ -22,34 +23,62 @@ const styles = StyleSheet.create({
+     },
+     something: { fontSize: 16 },
+ });
++
+ const FlagText = (props) => (React.createElement(CountryText, Object.assign({}, props, { style: styles.something })));
+-const FlagWithSomething = memo(({ countryCode, withEmoji, withCountryNameButton, withCurrencyButton, withCallingCodeButton, withFlagButton, flagSize, placeholder, }) => {
++
++const FlagWithSomething = memo(({
++    countryCode,
++    withEmoji = true,
++    withCountryNameButton = true,
++    withCurrencyButton = true,
++    withCallingCodeButton = true,
++    withFlagButton = true,
++    flagSize,
++    placeholder
++}) => {
+     const { translation, getCountryInfoAsync } = useContext();
+     const [state, setState] = useState({
+         countryName: '',
+         currency: '',
+-        callingCode: '',
++        callingCode: ''
+     });
+-    const { countryName, currency, callingCode } = state;
++
+     useEffect(() => {
+         if (countryCode) {
+             getCountryInfoAsync({ countryCode, translation })
+-                .then(setState)
+-                .catch(console.warn);
++                .then(setState);
+         }
+-    }, [
+-        countryCode,
+-        withCountryNameButton,
+-        withCurrencyButton,
+-        withCallingCodeButton,
+-    ]);
+-    return (React.createElement(View, { style: styles.flagWithSomethingContainer },
+-        countryCode ? (React.createElement(Flag, Object.assign({}, { withEmoji, countryCode, withFlagButton, flagSize: flagSize }))) : (React.createElement(FlagText, null, placeholder)),
+-        withCountryNameButton && countryName ? (React.createElement(FlagText, null, countryName + ' ')) : null,
+-        withCurrencyButton && currency ? (React.createElement(FlagText, null, `(${currency}) `)) : null,
+-        withCallingCodeButton && callingCode ? (React.createElement(FlagText, null, `+${callingCode}`)) : null));
++    }, [countryCode]);
++
++    return (
++        React.createElement(View, { style: styles.flagWithSomethingContainer },
++            withFlagButton && countryCode
++                ? React.createElement(Flag, { countryCode, withEmoji, flagSize })
++                : null,
++            withCountryNameButton
++                ? React.createElement(FlagText, null, state.countryName || placeholder)
++                : null,
++            withCurrencyButton && state.currency
++                ? React.createElement(FlagText, null,
++                    " (", state.currency, ")")
++                : null,
++            withCallingCodeButton && state.callingCode
++                ? React.createElement(FlagText, null,
++                    " +", state.callingCode)
++                : null)
++    );
+ });
+-export const FlagButton = ({ withEmoji, withCountryNameButton, withCallingCodeButton, withCurrencyButton, withFlagButton, countryCode, containerButtonStyle, onOpen, placeholder, }) => {
++export const FlagButton = ({
++    withEmoji = true,
++    withCountryNameButton = false,
++    withCallingCodeButton = false,
++    withCurrencyButton = false,
++    withFlagButton = true,
++    countryCode,
++    containerButtonStyle,
++    onOpen,
++    placeholder
++}) => {
+     const { flagSizeButton: flagSize } = useTheme();
+     return (React.createElement(TouchableOpacity, { activeOpacity: 0.7, onPress: onOpen },
+         React.createElement(View, { style: [
+@@ -68,11 +97,5 @@ export const FlagButton = ({ withEmoji, withCountryNameButton, withCallingCodeBu
+                 placeholder,
+             })))));
+ };
+-FlagButton.defaultProps = {
+-    withEmoji: true,
+-    withCountryNameButton: false,
+-    withCallingCodeButton: false,
+-    withCurrencyButton: false,
+-    withFlagButton: true,
+-};
++
+ //# sourceMappingURL=FlagButton.js.map
+\ No newline at end of file
+diff --git a/lib/HeaderModal.js b/lib/HeaderModal.js
+index d08566a643cb8211f0dcb1be8cbe83054d320851..b76b56f6ea134cdb7c0485481db8e5fce24bb670 100644
+--- a/lib/HeaderModal.js
++++ b/lib/HeaderModal.js
+@@ -1,5 +1,5 @@
+ import React from 'react';
+-import { View, StyleSheet } from 'react-native';
++import { StyleSheet, View } from 'react-native';
+ import CloseButton from './CloseButton';
+ const styles = StyleSheet.create({
+     container: {
+@@ -8,12 +8,10 @@ const styles = StyleSheet.create({
+     }
+ });
+ export const HeaderModal = (props) => {
+-    const { withFilter, withCloseButton, closeButtonImage, closeButtonStyle, closeButtonImageStyle, onClose, renderFilter } = props;
++    const { withFilter, withCloseButton = true, closeButtonImage, closeButtonStyle, closeButtonImageStyle, onClose, renderFilter } = props;
+     return (React.createElement(View, { style: styles.container },
+         withCloseButton && React.createElement(CloseButton, { image: closeButtonImage, style: closeButtonStyle, imageStyle: closeButtonImageStyle, onPress: onClose }),
+         withFilter && renderFilter(props)));
+ };
+-HeaderModal.defaultProps = {
+-    withCloseButton: true
+-};
++
+ //# sourceMappingURL=HeaderModal.js.map
+\ No newline at end of file
+diff --git a/lib/index.js b/lib/index.js
+index 4a47213f9d5fc82a4ca147728c8db3810f96a8b9..e94eb19bd79fda263c9a3b5de62dbd743771aaa7 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -1,25 +1,22 @@
+ import React from 'react';
+ import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from './CountryContext';
+-import { ThemeProvider, DEFAULT_THEME } from './CountryTheme';
+ import { CountryPicker } from './CountryPicker';
+-const Main = ({ theme, translation, ...props }) => {
++import { DEFAULT_THEME, ThemeProvider } from './CountryTheme';
++const Main = ({ theme, translation, onSelect = () => {}, withEmoji = true, ...props }) => {
+     return (React.createElement(ThemeProvider, { theme: { ...DEFAULT_THEME, ...theme } },
+         React.createElement(CountryProvider, { value: { ...DEFAULT_COUNTRY_CONTEXT, translation } },
+-            React.createElement(CountryPicker, Object.assign({}, props)))));
+-};
+-Main.defaultProps = {
+-    onSelect: () => { },
+-    withEmoji: true,
++            React.createElement(CountryPicker, Object.assign({onSelect, withEmoji}, props)))));
+ };
++
+ export default Main;
+-export { getCountriesAsync as getAllCountries, getCountryCallingCodeAsync as getCallingCode, } from './CountryService';
+-export { CountryModal } from './CountryModal';
+-export { DARK_THEME, DEFAULT_THEME } from './CountryTheme';
+ export { CountryFilter } from './CountryFilter';
+ export { CountryList } from './CountryList';
+-export { FlagButton } from './FlagButton';
++export { CountryModal } from './CountryModal';
++export { CountryModalProvider } from './CountryModalProvider';
++export { getCountriesAsync as getAllCountries, getCountryCallingCodeAsync as getCallingCode } from './CountryService';
++export { DARK_THEME, DEFAULT_THEME } from './CountryTheme';
+ export { Flag } from './Flag';
++export { FlagButton } from './FlagButton';
+ export { HeaderModal } from './HeaderModal';
+-export { CountryModalProvider } from './CountryModalProvider';
+ export * from './types';
+ //# sourceMappingURL=index.js.map
+\ No newline at end of file
