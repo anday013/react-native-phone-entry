@@ -20,9 +20,7 @@
 ## TODO
 
 - [ ] Fix defaultProp issue with picker library
-- [ ] Make similar UI with OTP lib
-- [ ] Add Error state
-- [ ] Make fully customizable
+- [ ] Add custom country picker modal
 
 ## Installation
 
@@ -69,15 +67,15 @@ export default function App() {
     callingCode: '+1',
     phoneNumber: '',
   }}
-  withShadow
-  withDarkTheme
+  theme={{
+    withShadow: true,
+    withDarkTheme: true,
+    containerStyle: styles.phoneContainer,
+    textInputStyle: styles.input,
+    flagButtonStyle: styles.flagButton,
+  }}
   autoFocus
   placeholder="Enter phone number"
-  containerStyle={styles.phoneContainer}
-  textContainerStyle={styles.textInput}
-  textInputStyle={styles.input}
-  flagButtonStyle={styles.flagButton}
-  countryPickerButtonStyle={styles.countryPicker}
   layout="second"
   onChangeText={(text) => console.log('Phone number:', text)}
   onChangeCountry={(country) => console.log('Country:', country)}
@@ -86,26 +84,31 @@ export default function App() {
 
 ## Props
 
-| Prop                       | Type                         | Description                                                     |
-| -------------------------- | ---------------------------- | --------------------------------------------------------------- |
-| `defaultValues`            | `object`                     | Default values for country code, calling code, and phone number |
-| `value`                    | `string`                     | Controlled value for the phone number input                     |
-| `onChangeText`             | `(text: string) => void`     | Callback when phone number changes                              |
-| `onChangeCountry`          | `(country: Country) => void` | Callback when selected country changes                          |
-| `withShadow`               | `boolean`                    | Adds shadow to the input container                              |
-| `withDarkTheme`            | `boolean`                    | Enables dark theme                                              |
-| `autoFocus`                | `boolean`                    | Automatically focuses the input when mounted                    |
-| `placeholder`              | `string`                     | Placeholder text for the phone number input                     |
-| `disabled`                 | `boolean`                    | Disables the input                                              |
-| `layout`                   | `'first' \| 'second'`        | Layout style for the country picker and input                   |
-| `containerStyle`           | `StyleProp<ViewStyle>`       | Style for the main container                                    |
-| `textContainerStyle`       | `StyleProp<ViewStyle>`       | Style for the text input container                              |
-| `textInputStyle`           | `StyleProp<TextStyle>`       | Style for the text input                                        |
-| `flagButtonStyle`          | `StyleProp<ViewStyle>`       | Style for the flag button                                       |
-| `countryPickerButtonStyle` | `StyleProp<ViewStyle>`       | Style for the country picker button                             |
-| `countryPickerProps`       | `CountryPickerProps`         | Props for the country picker modal                              |
-| `filterProps`              | `object`                     | Props for the country filter                                    |
-| `maskInputProps`           | `MaskInputProps`             | Props for the masked input component                            |
+| Prop                 | Type                         | Description                                                     |
+| -------------------- | ---------------------------- | --------------------------------------------------------------- |
+| `defaultValues`      | `object`                     | Default values for country code, calling code, and phone number |
+| `value`              | `string`                     | Controlled value for the phone number input                     |
+| `onChangeText`       | `(text: string) => void`     | Callback when phone number changes                              |
+| `onChangeCountry`    | `(country: Country) => void` | Callback when selected country changes                          |
+| `autoFocus`          | `boolean`                    | Automatically focuses the input when mounted                    |
+| `placeholder`        | `string`                     | Placeholder text for the phone number input                     |
+| `disabled`           | `boolean`                    | Disables the input                                              |
+| `layout`             | `'first' \| 'second'`        | Layout style for the country picker and input                   |
+| `countryPickerProps` | `CountryPickerProps`         | Props for the country picker modal                              |
+| `filterProps`        | `object`                     | Props for the country filter                                    |
+| `maskInputProps`     | `MaskInputProps`             | Props for the masked input component                            |
+| `theme`              | `Theme`                      | Theme configuration for styling the component                   |
+
+### Theme Properties
+
+| Property          | Type                   | Description                          |
+| ----------------- | ---------------------- | ------------------------------------ |
+| `containerStyle`  | `StyleProp<ViewStyle>` | Style for the main container         |
+| `textInputStyle`  | `StyleProp<TextStyle>` | Style for the text input             |
+| `codeTextStyle`   | `StyleProp<TextStyle>` | Style for the calling code text      |
+| `flagButtonStyle` | `StyleProp<ViewStyle>` | Style for the flag button            |
+| `withDarkTheme`   | `boolean`              | Enables dark theme for the component |
+| `withShadow`      | `boolean`              | Adds shadow to the input container   |
 
 ## Contributing
 

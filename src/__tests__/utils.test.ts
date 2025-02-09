@@ -1,4 +1,4 @@
-import { maskPerCountry } from '../PhoneInput/constants';
+import { MASK_PER_COUNTRY } from '../PhoneInput/constants';
 import {
   ensurePlusPrefix,
   getFullMaskPhoneNumber,
@@ -71,19 +71,19 @@ describe('Phone Input Utils', () => {
   describe('getFullMaskPhoneNumber', () => {
     it('should generate correct mask array for US number', () => {
       const result = getFullMaskPhoneNumber('+1', 'US');
-      const expected = ['+', /\d/, ' ', ...maskPerCountry['US']];
+      const expected = ['+', /\d/, ' ', ...(MASK_PER_COUNTRY.US || [])];
       expect(result).toEqual(expected);
     });
 
     it('should generate correct mask array for multi-digit calling code', () => {
       const result = getFullMaskPhoneNumber('+44', 'GB');
-      const expected = ['+', /\d/, /\d/, ' ', ...maskPerCountry['GB']];
+      const expected = ['+', /\d/, /\d/, ' ', ...(MASK_PER_COUNTRY.GB || [])];
       expect(result).toEqual(expected);
     });
 
     it('should handle calling code without plus', () => {
       const result = getFullMaskPhoneNumber('1', 'US');
-      const expected = [/\d/, ' ', ...maskPerCountry['US']];
+      const expected = [/\d/, ' ', ...(MASK_PER_COUNTRY.US || [])];
       expect(result).toEqual(expected);
     });
   });

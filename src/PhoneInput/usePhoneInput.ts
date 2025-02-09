@@ -6,7 +6,7 @@ import {
   type CountryCode,
 } from 'react-native-country-picker-modal';
 import type { Mask } from 'react-native-mask-input';
-import { callingCodePerCountryCode } from './constants';
+import { CALLING_CODE_PER_COUNTRY_CODE } from './constants';
 import type { PhoneInputProps } from './PhoneInput.types';
 import { ensurePlusPrefix, getFullMaskPhoneNumber } from './utils';
 
@@ -36,9 +36,9 @@ export const usePhoneInput = ({
   const hideModal = () => setModalVisible(false);
 
   const updateCountryOnType = useCallback((inputText: string) => {
-    if (callingCodePerCountryCode?.[inputText]) {
+    if (CALLING_CODE_PER_COUNTRY_CODE?.[inputText]) {
       setCallingCode(inputText);
-      const newCountryCode = callingCodePerCountryCode?.[inputText];
+      const newCountryCode = CALLING_CODE_PER_COUNTRY_CODE?.[inputText];
       setCountryCode(newCountryCode);
       setMask(getFullMaskPhoneNumber(inputText, newCountryCode));
     }

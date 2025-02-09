@@ -33,7 +33,6 @@ interface Theme {
   textInputStyle?: StyleProp<TextStyle>;
   codeTextStyle?: StyleProp<TextStyle>;
   flagButtonStyle?: StyleProp<ViewStyle>;
-  countryPickerButtonStyle?: StyleProp<ViewStyle>;
   withDarkTheme?: boolean;
   withShadow?: boolean;
 }

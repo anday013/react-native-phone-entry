@@ -4,7 +4,7 @@ import type {
   CountryCode,
 } from 'react-native-country-picker-modal';
 import type { MaskArray } from 'react-native-mask-input';
-import { maskPerCountry } from './constants';
+import { MASK_PER_COUNTRY } from './constants';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -42,5 +42,5 @@ export const getFullMaskPhoneNumber = (
 ) => [
   ...callingCodeToMaskArray(callingCode),
   ' ',
-  ...maskPerCountry[countryCode],
+  ...(MASK_PER_COUNTRY[countryCode] || []),
 ];

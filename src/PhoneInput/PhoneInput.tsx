@@ -7,6 +7,7 @@ import CountryPicker, {
   Flag,
 } from 'react-native-country-picker-modal';
 import MaskInput from 'react-native-mask-input';
+import { EXCLUDED_COUNTRIES } from './constants';
 import type { PhoneInputProps } from './PhoneInput.types';
 import styles from './styles';
 import { usePhoneInput } from './usePhoneInput';
@@ -28,7 +29,6 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
       textInputStyle,
       flagButtonStyle,
       containerStyle,
-      countryPickerButtonStyle,
     } = {},
     maskInputProps,
     autoFocus,
@@ -50,12 +50,16 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
     );
   }, []);
 
-  const renderFlagButton = useCallback(() => {
-    const flagSize = flagProps?.flagSize || DEFAULT_THEME.flagSize;
-    return (
-      <Flag countryCode={countryCode} flagSize={flagSize} {...flagProps} />
-    );
-  }, [countryCode, flagProps]);
+  const renderFlagButton = useCallback(
+    () => (
+      <Flag
+        countryCode={countryCode}
+        flagSize={flagProps?.flagSize || DEFAULT_THEME.flagSize}
+        {...flagProps}
+      />
+    ),
+    [countryCode, flagProps]
+  );
 
   return (
     <CountryModalProvider>
@@ -69,11 +73,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
       >
         <TouchableOpacity
           testID="country-picker-button"
-          style={[
-            styles.flagButtonView,
-            flagButtonStyle,
-            countryPickerButtonStyle,
-          ]}
+          style={[styles.flagButtonView, flagButtonStyle]}
           disabled={disabled}
           onPress={showModal}
         >
@@ -82,6 +82,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             withEmoji
             withFilter
             withFlag
+            withAlphaFilter
             filterProps={countryPickerProps?.filterProps}
             countryCode={countryCode}
             withCallingCode
@@ -89,30 +90,29 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             visible={modalVisible}
             theme={withDarkTheme ? DARK_THEME : DEFAULT_THEME}
             renderFlagButton={renderFlagButton}
+            excludeCountries={EXCLUDED_COUNTRIES}
             onClose={hideModal}
             {...countryPickerProps}
           />
           {!disableArrowIcon &&
             (renderDropdownImage || <>{_renderDropdownImage}</>)}
         </TouchableOpacity>
-        <View style={styles.textInputWrapper}>
-          <MaskInput
-            testID="phone-input"
-            ref={(ref) => {
-              inputRef.current = ref;
-            }}
-            style={[styles.numberText, textInputStyle]}
-            mask={mask}
-            onChangeText={handleChangeText}
-            value={phoneNumber}
-            editable={!disabled}
-            selectionColor="black"
-            keyboardAppearance={withDarkTheme ? 'dark' : 'default'}
-            keyboardType="number-pad"
-            autoFocus={autoFocus}
-            {...maskInputProps}
-          />
-        </View>
+        <MaskInput
+          testID="phone-input"
+          ref={(ref) => {
+            inputRef.current = ref;
+          }}
+          style={[styles.numberText, textInputStyle]}
+          mask={mask}
+          onChangeText={handleChangeText}
+          value={phoneNumber}
+          editable={!disabled}
+          selectionColor="black"
+          keyboardAppearance={withDarkTheme ? 'dark' : 'default'}
+          keyboardType="number-pad"
+          autoFocus={autoFocus}
+          {...maskInputProps}
+        />
       </View>
     </CountryModalProvider>
   );
