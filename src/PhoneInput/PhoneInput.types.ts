@@ -1,4 +1,10 @@
-import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import type {
+  ImageProps,
+  ImageStyle,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import type {
   CallingCode,
   Country,
@@ -18,21 +24,22 @@ export type PhoneInputProps = {
     phoneNumber: string;
   };
   disabled?: boolean;
-  disableArrowIcon?: boolean;
+  hideDropdownIcon?: boolean;
   onChangeCountry?: (country: Country) => void;
   onChangeText?: (text: string) => void;
-  renderDropdownImage?: JSX.Element;
+  renderCustomDropdown?: JSX.Element;
   theme?: Theme;
   maskInputProps?: MaskInputProps;
   countryPickerProps?: Parameters<typeof CountryPicker>[0];
   flagProps?: Parameters<typeof Flag>[0];
   callingCodeEditable?: boolean;
+  dropDownImageProps?: ImageProps;
 };
 interface Theme {
   containerStyle?: StyleProp<ViewStyle>;
   textInputStyle?: StyleProp<TextStyle>;
   codeTextStyle?: StyleProp<TextStyle>;
   flagButtonStyle?: StyleProp<ViewStyle>;
-  withDarkTheme?: boolean;
-  withShadow?: boolean;
+  dropDownImageStyle?: StyleProp<ImageStyle>;
+  enableDarkTheme?: boolean;
 }

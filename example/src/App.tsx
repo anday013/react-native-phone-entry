@@ -10,7 +10,7 @@ export default function App() {
         // callingCodeEditable={false}
         theme={
           {
-            // withShadow: true,
+            // enableShadow: true,
           }
         }
       />
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 16,
     // backgroundColor: 'black',
   },
 });

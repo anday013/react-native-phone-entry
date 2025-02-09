@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { Appearance, Image, TouchableOpacity, View } from 'react-native';
 import CountryPicker, {
   CountryModalProvider,
@@ -13,7 +13,7 @@ import styles from './styles';
 import { usePhoneInput } from './usePhoneInput';
 
 const isDarkTheme = Appearance.getColorScheme() === 'dark';
-const dropDown =
+const dropDownImage =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAi0lEQVRYR+3WuQ6AIBRE0eHL1T83FBqU5S1szdiY2NyTKcCAzU/Y3AcBXIALcIF0gRPAsehgugDEXnYQrUC88RIgfpuJ+MRrgFmILN4CjEYU4xJgFKIa1wB6Ec24FuBFiHELwIpQxa0ALUId9wAkhCnuBdQQ5ngP4I9wxXsBDyJ9m+8y/g9wAS7ABW4giBshQZji3AAAAABJRU5ErkJggg==';
 
 export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
@@ -25,31 +25,21 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
 
   const {
     theme: {
-      withDarkTheme = isDarkTheme,
-      withShadow,
+      enableDarkTheme = isDarkTheme,
       textInputStyle,
       flagButtonStyle,
       containerStyle,
+      dropDownImageStyle,
     } = {},
     maskInputProps,
     autoFocus,
-    disableArrowIcon,
-    renderDropdownImage,
+    hideDropdownIcon,
+    renderCustomDropdown,
     countryPickerProps,
     flagProps,
     disabled,
+    dropDownImageProps,
   } = props;
-
-  const _renderDropdownImage = useMemo(() => {
-    return (
-      <Image
-        testID="dropdown-icon"
-        source={{ uri: dropDown }}
-        resizeMode="contain"
-        style={styles.dropDownImage}
-      />
-    );
-  }, []);
 
   const renderFlagButton = useCallback(
     () => (
@@ -66,11 +56,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
     <CountryModalProvider>
       <View
         testID="phone-input-container"
-        style={[
-          styles.container,
-          withShadow ? styles.shadow : {},
-          containerStyle,
-        ]}
+        style={[styles.container, containerStyle]}
       >
         <TouchableOpacity
           testID="country-picker-button"
@@ -89,14 +75,22 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             withCallingCode
             disableNativeModal={disabled}
             visible={modalVisible}
-            theme={withDarkTheme ? DARK_THEME : DEFAULT_THEME}
+            theme={enableDarkTheme ? DARK_THEME : DEFAULT_THEME}
             renderFlagButton={renderFlagButton}
             excludeCountries={EXCLUDED_COUNTRIES}
             onClose={hideModal}
             {...countryPickerProps}
           />
-          {!disableArrowIcon &&
-            (renderDropdownImage || <>{_renderDropdownImage}</>)}
+          {!hideDropdownIcon &&
+            (renderCustomDropdown || (
+              <Image
+                testID="dropdown-icon"
+                source={{ uri: dropDownImage }}
+                resizeMode="contain"
+                style={[styles.dropDownImage, dropDownImageStyle]}
+                {...dropDownImageProps}
+              />
+            ))}
         </TouchableOpacity>
         <MaskInput
           testID="phone-input"
@@ -109,7 +103,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
           value={phoneNumber}
           editable={!disabled}
           selectionColor="black"
-          keyboardAppearance={withDarkTheme ? 'dark' : 'default'}
+          keyboardAppearance={enableDarkTheme ? 'dark' : 'default'}
           keyboardType="number-pad"
           autoFocus={autoFocus}
           {...maskInputProps}

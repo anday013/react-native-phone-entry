@@ -25,9 +25,6 @@ jest.mock('react-native-country-picker-modal', () => ({
 
 // Mock react-native
 jest.mock('react-native', () => ({
-  Dimensions: {
-    get: jest.fn().mockReturnValue({ width: 375, height: 812 }),
-  },
   TextInput: 'TextInput',
   Image: 'Image',
   TouchableOpacity: 'TouchableOpacity',
@@ -43,5 +40,8 @@ jest.mock('react-native', () => ({
       }
       return style || {};
     },
+  },
+  Platform: {
+    select: jest.fn(),
   },
 }));

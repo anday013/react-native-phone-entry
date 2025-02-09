@@ -68,8 +68,8 @@ export default function App() {
     phoneNumber: '',
   }}
   theme={{
-    withShadow: true,
-    withDarkTheme: true,
+    enableShadow: true,
+    enableDarkTheme: true,
     containerStyle: styles.phoneContainer,
     textInputStyle: styles.input,
     flagButtonStyle: styles.flagButton,
@@ -107,8 +107,8 @@ export default function App() {
 | `textInputStyle`  | `StyleProp<TextStyle>` | Style for the text input             |
 | `codeTextStyle`   | `StyleProp<TextStyle>` | Style for the calling code text      |
 | `flagButtonStyle` | `StyleProp<ViewStyle>` | Style for the flag button            |
-| `withDarkTheme`   | `boolean`              | Enables dark theme for the component |
-| `withShadow`      | `boolean`              | Adds shadow to the input container   |
+| `enableDarkTheme` | `boolean`              | Enables dark theme for the component |
+| `enableShadow`    | `boolean`              | Adds shadow to the input container   |
 
 ## Contributing
 

@@ -85,28 +85,11 @@ describe('PhoneInput', () => {
 
   it('handles dark theme correctly', () => {
     const { getByTestId } = render(
-      <PhoneInput {...defaultProps} theme={{ withDarkTheme: true }} />
+      <PhoneInput {...defaultProps} theme={{ enableDarkTheme: true }} />
     );
 
     const input = getByTestId('phone-input');
     expect(input.props.keyboardAppearance).toBe('dark');
-  });
-
-  it('handles shadow style correctly', () => {
-    const { getByTestId } = render(
-      <PhoneInput {...defaultProps} theme={{ withShadow: true }} />
-    );
-
-    const container = getByTestId('phone-input-container');
-    expect(container.props.style).toContainEqual(
-      expect.objectContaining({
-        shadowColor: '#000000',
-        shadowOffset: expect.any(Object),
-        shadowOpacity: expect.any(Number),
-        shadowRadius: expect.any(Number),
-        elevation: expect.any(Number),
-      })
-    );
   });
 
   it('handles country picker modal visibility', () => {
@@ -121,7 +104,7 @@ describe('PhoneInput', () => {
   it('renders custom dropdown image when provided', () => {
     const customDropdown = <View testID="custom-dropdown" />;
     const { getByTestId } = render(
-      <PhoneInput {...defaultProps} renderDropdownImage={customDropdown} />
+      <PhoneInput {...defaultProps} renderCustomDropdown={customDropdown} />
     );
 
     expect(getByTestId('custom-dropdown')).toBeTruthy();
@@ -151,9 +134,9 @@ describe('PhoneInput', () => {
     );
   });
 
-  it('hides arrow icon when disableArrowIcon is true', () => {
+  it('hides arrow icon when hideDropdownIcon is true', () => {
     const { queryByTestId } = render(
-      <PhoneInput {...defaultProps} disableArrowIcon />
+      <PhoneInput {...defaultProps} hideDropdownIcon />
     );
 
     expect(queryByTestId('dropdown-icon')).toBeNull();
