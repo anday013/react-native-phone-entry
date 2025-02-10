@@ -32,7 +32,7 @@ export type PhoneInputProps = {
   maskInputProps?: MaskInputProps;
   countryPickerProps?: Parameters<typeof CountryPicker>[0];
   flagProps?: Parameters<typeof Flag>[0];
-  callingCodeEditable?: boolean;
+  isCallingCodeEditable?: boolean;
   dropDownImageProps?: ImageProps;
 };
 interface Theme {

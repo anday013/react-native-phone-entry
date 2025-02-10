@@ -15,7 +15,7 @@ export const usePhoneInput = ({
   value,
   onChangeCountry,
   onChangeText,
-  callingCodeEditable = true,
+  isCallingCodeEditable = true,
 }: PhoneInputProps) => {
   const inputRef = useRef<TextInput | null>();
   const [callingCode, setCallingCode] = useState<CallingCode>(
@@ -59,12 +59,17 @@ export const usePhoneInput = ({
   const handleChangeText = useCallback(
     (_masked: string, unmasked: string, _obfuscated: string) => {
       const text = ensurePlusPrefix(unmasked);
-      if (!callingCodeEditable && text.length < callingCode.length) return;
+      if (!isCallingCodeEditable && text.length < callingCode.length) return;
       updateCountryOnType(text);
       setPhoneNumber(text);
       onChangeText?.(text);
     },
-    [callingCodeEditable, callingCode.length, updateCountryOnType, onChangeText]
+    [
+      isCallingCodeEditable,
+      callingCode.length,
+      updateCountryOnType,
+      onChangeText,
+    ]
   );
 
   return {

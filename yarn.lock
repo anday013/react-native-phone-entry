@@ -12298,16 +12298,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-otp-entry@npm:~1.8.2":
-  version: 1.8.2
-  resolution: "react-native-otp-entry@npm:1.8.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: f5c1f99a142048efa4c406796aea5d2bec306685f886225316066ec2f96ab6ef145e8c115f876c480e46d6b3ed956899c297d088aeb3e2834f3cdd7293ef5256
-  languageName: node
-  linkType: hard
-
 "react-native-phone-entry-example@workspace:example":
   version: 0.0.0-use.local
   resolution: "react-native-phone-entry-example@workspace:example"
@@ -12320,7 +12310,6 @@ __metadata:
     react-dom: 18.3.1
     react-native: 0.76.6
     react-native-builder-bob: ^0.35.2
-    react-native-otp-entry: ~1.8.2
     react-native-web: ~0.19.13
   languageName: unknown
   linkType: soft

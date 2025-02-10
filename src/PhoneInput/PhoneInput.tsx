@@ -70,7 +70,6 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
             withFilter
             withFlag
             withAlphaFilter
-            filterProps={countryPickerProps?.filterProps}
             countryCode={countryCode}
             withCallingCode
             disableNativeModal={disabled}
