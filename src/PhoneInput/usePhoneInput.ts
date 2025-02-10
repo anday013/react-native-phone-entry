@@ -20,7 +20,7 @@ export const usePhoneInput = ({
   const inputRef = useRef<TextInput | null>();
   const [callingCode, setCallingCode] = useState<CallingCode>(
     defaultValues?.callingCode || '+994'
-  ); // TODO: Get rid of calling code in the future
+  );
   const [phoneNumber, setPhoneNumber] = useState<string>(
     value || defaultValues?.phoneNumber || '+994'
   );

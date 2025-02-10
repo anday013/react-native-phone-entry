@@ -6,20 +6,14 @@
 
 `react-native-phone-entry` is a simple and fully modifiable Phone Number Input Component for React Native that provides an intuitive interface for entering and validating international phone numbers. It includes country code selection, number formatting, and validation features.
 
-<!-- ![Demo](assets/autopick.gif){width=33%} ![Demo](assets/mask.gif){width=33%} ![Demo](assets/country_picker.gif){width=33%} -->
-
-<!-- ![Autopick](assets/autopick.gif)
-![Autopick](assets/autopick.gif) -->
-
- <div align="center">
-   <h3>Autopick Feature</h3>
-   <img src="assets/autopick.gif"  />
-   <p>A feature that automatically picks the right country while typing the phone number.</p>
-   <h3>Masking Feature</h3>
-   <img src="assets/mask.gif"  />
-   <p>A feature that picks a right mask based on the country code.</p>
- </div>
-<!-- <img src="assets/country_picker.gif" width="32%" /> -->
+<div align="center">
+  <h3>Autopick Feature</h3>
+  <img src="assets/autopick.gif"  />
+  <p>A feature that automatically picks the right country while typing the phone number.</p>
+  <h3>Masking Feature</h3>
+  <img src="assets/mask.gif"  />
+  <p>A feature that picks a right mask based on the country code.</p>
+</div>
 
 ## Features
 
@@ -54,13 +48,13 @@ import { PhoneInput, isValidNumber } from 'react-native-phone-entry';
 
 ```jsx
 export default function App() {
-  const [countryCode, setCountryCode] = useState < CountryCode > 'AZ';
+  const [countryCode, setCountryCode] = useState < CountryCode > 'US';
   return (
     <PhoneInput
       defaultValues={{
         countryCode: 'US',
         callingCode: '+1',
-        phoneNumber: '',
+        phoneNumber: '+1',
       }}
       onChangeText={(text) =>
         console.log(
@@ -86,9 +80,9 @@ export default function App() {
   defaultValues={{
     countryCode: 'US',
     callingCode: '+1',
-    phoneNumber: '123456789',
+    phoneNumber: '+123456789',
   }}
-  value="123456789"
+  value="+123456789"
   onChangeText={(text) => console.log('Phone number:', text)}
   onChangeCountry={(country) => console.log('Country:', country)}
   autoFocus={true}
@@ -113,33 +107,53 @@ export default function App() {
 
 ## Props
 
-| Prop                    | Type                                                                                           | Description                                                     |
-| ----------------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| `defaultValues`         | `object`                                                                                       | Default values for country code, calling code, and phone number |
-| `value`                 | `string`                                                                                       | Controlled value for the phone number input                     |
-| `onChangeText`          | `(text: string) => void`                                                                       | Callback when phone number changes                              |
-| `onChangeCountry`       | `(country: Country) => void`                                                                   | Callback when selected country changes                          |
-| `autoFocus`             | `boolean`                                                                                      | Automatically focuses the input when mounted                    |
-| `disabled`              | `boolean`                                                                                      | Disables the input                                              |
-| `countryPickerProps`    | [`CountryPickerProps`](https://github.com/xcarpentier/react-native-country-picker-modal#props) | Props for the country picker modal                              |
-| `maskInputProps`        | [`MaskInputProps`](https://github.com/CaioQuirinoMedeiros/react-native-mask-input#props)       | Props for the masked input component                            |
-| `theme`                 | `Theme`                                                                                        | Theme configuration for styling the component                   |
-| `hideDropdownIcon`      | `boolean`                                                                                      | Hides the dropdown arrow icon when set to true                  |
-| `renderCustomDropdown`  | [`ReactNode`](https://react.dev/reference/react/Children)                                      | Custom component to replace the default dropdown arrow          |
-| `flagProps`             | `object`                                                                                       | Props for customizing the country flag                          |
-| `dropDownImageProps`    | [`ImageProps`](https://reactnative.dev/docs/image#props)                                       | Props for customizing the dropdown arrow image                  |
-| `isCallingCodeEditable` | `boolean`                                                                                      | Controls whether the calling code can be edited                 |
+| Prop                    | Type                                                                                           | Description                                                     | Default     |
+| ----------------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ----------- |
+| `defaultValues`         | `object`                                                                                       | Default values for country code, calling code, and phone number | `undefined` |
+| `value`                 | `string`                                                                                       | Controlled value for the phone number input                     | `undefined` |
+| `onChangeText`          | `(text: string) => void`                                                                       | Callback when phone number changes                              | `undefined` |
+| `onChangeCountry`       | `(country: Country) => void`                                                                   | Callback when selected country changes                          | `undefined` |
+| `autoFocus`             | `boolean`                                                                                      | Automatically focuses the input when mounted                    | `false`     |
+| `disabled`              | `boolean`                                                                                      | Disables the input                                              | `false`     |
+| `countryPickerProps`    | [`CountryPickerProps`](https://github.com/xcarpentier/react-native-country-picker-modal#props) | Props for the country picker modal                              | `{}`        |
+| `maskInputProps`        | [`MaskInputProps`](https://github.com/CaioQuirinoMedeiros/react-native-mask-input#props)       | Props for the masked input component                            | `{}`        |
+| `theme`                 | `Theme`                                                                                        | Theme configuration for styling the component                   | `{}`        |
+| `hideDropdownIcon`      | `boolean`                                                                                      | Hides the dropdown arrow icon when set to true                  | `false`     |
+| `renderCustomDropdown`  | [`ReactNode`](https://react.dev/reference/react/Children)                                      | Custom component to replace the default dropdown arrow          | `undefined` |
+| `flagProps`             | `object`                                                                                       | Props for customizing the country flag                          | `{}`        |
+| `dropDownImageProps`    | [`ImageProps`](https://reactnative.dev/docs/image#props)                                       | Props for customizing the dropdown arrow image                  | `{}`        |
+| `isCallingCodeEditable` | `boolean`                                                                                      | Controls whether the calling code can be edited                 | `true`      |
 
 ### Theme Properties
 
-| Property             | Type                                                                      | Description                          |
-| -------------------- | ------------------------------------------------------------------------- | ------------------------------------ |
-| `containerStyle`     | [`StyleProp<ViewStyle>`](https://reactnative.dev/docs/view-style-props)   | Style for the main container         |
-| `textInputStyle`     | [`StyleProp<TextStyle>`](https://reactnative.dev/docs/text-style-props)   | Style for the text input             |
-| `codeTextStyle`      | [`StyleProp<TextStyle>`](https://reactnative.dev/docs/text-style-props)   | Style for the calling code text      |
-| `flagButtonStyle`    | [`StyleProp<ViewStyle>`](https://reactnative.dev/docs/view-style-props)   | Style for the flag button            |
-| `dropDownImageStyle` | [`StyleProp<ImageStyle>`](https://reactnative.dev/docs/image-style-props) | Style for the dropdown arrow image   |
-| `enableDarkTheme`    | `boolean`                                                                 | Enables dark theme for the component |
+| Property             | Type                                                                      | Description                          | Default     |
+| -------------------- | ------------------------------------------------------------------------- | ------------------------------------ | ----------- |
+| `containerStyle`     | [`StyleProp<ViewStyle>`](https://reactnative.dev/docs/view-style-props)   | Style for the main container         | `undefined` |
+| `textInputStyle`     | [`StyleProp<TextStyle>`](https://reactnative.dev/docs/text-style-props)   | Style for the text input             | `undefined` |
+| `codeTextStyle`      | [`StyleProp<TextStyle>`](https://reactnative.dev/docs/text-style-props)   | Style for the calling code text      | `undefined` |
+| `flagButtonStyle`    | [`StyleProp<ViewStyle>`](https://reactnative.dev/docs/view-style-props)   | Style for the flag button            | `undefined` |
+| `dropDownImageStyle` | [`StyleProp<ImageStyle>`](https://reactnative.dev/docs/image-style-props) | Style for the dropdown arrow image   | `undefined` |
+| `enableDarkTheme`    | `boolean`                                                                 | Enables dark theme for the component | `false`     |
+
+## Utility Functions
+
+### `isValidNumber(phoneNumber: string, countryCode: string): boolean`
+
+Validates a phone number for a specific country using Google's libphonenumber.
+
+```jsx
+import { isValidNumber } from 'react-native-phone-entry';
+
+const isValid = isValidNumber('+1234567890', 'US');
+```
+
+## Dependencies
+
+This library depends on the following packages:
+
+- [react-native-country-picker-modal](https://github.com/xcarpentier/react-native-country-picker-modal)
+- [react-native-mask-input](https://github.com/CaioQuirinoMedeiros/react-native-mask-input)
+- [google-libphonenumber](https://github.com/ruimarinho/google-libphonenumber)
 
 ## Contributing
 
