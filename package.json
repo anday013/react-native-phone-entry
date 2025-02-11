@@ -5,6 +5,7 @@
   "source": "./src/index.ts",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
+  "types": "./lib/typescript/module/src/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -83,9 +84,9 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "google-libphonenumber": "^3.2.40",
     "react-native-country-picker-modal": "^2.0.0",
-    "react-native-mask-input": "^1.2.3"
+    "react-native-mask-input": "^1.2.3",
+    "google-libphonenumber": "^3.2.40"
   },
   "resolutions": {
     "@types/react": "^18.2.44",
@@ -182,9 +183,23 @@
     "source": "src",
     "output": "lib",
     "targets": [
+      "codegen",
       [
         "commonjs",
         {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
           "esm": true
         }
       ]
