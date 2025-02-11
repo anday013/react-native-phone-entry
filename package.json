@@ -114,6 +114,10 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "setup.ts"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "html"
     ]
   },
   "commitlint": {
