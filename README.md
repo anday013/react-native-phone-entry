@@ -1,8 +1,11 @@
 # react-native-phone-entry
 
-<!-- [![npm version](https://badge.fury.io/js/react-native-phone-entry.svg?&kill_cache=1)](https://badge.fury.io/js/react-native-phone-entry)
-[![npm](https://img.shields.io/npm/dm/react-native-phone-entry.svg?&kill_cache=1)]()
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?&kill_cache=1)](https://github.com/anday013/react-native-phone-entry/blob/main/LICENSE) -->
+[![npm version](https://badge.fury.io/js/react-native-phone-entry.svg?&kill_cache=1)](https://badge.fury.io/js/react-native-phone-entry)
+[![cov](https://anday013.github.io/react-native-phone-entry/badges/coverage.svg?&kill_cache=1)](https://github.com/anday013/react-native-phone-entry/actions)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?&kill_cache=1)](https://github.com/your-username/react-native-phone-entry/blob/main/LICENSE)
+
+<!-- [![npm](https://img.shields.io/npm/dm/react-native-phone-entry.svg?&kill_cache=1)]() -->
+<!-- [![install size](https://packagephobia.com/badge?p=react-native-phone-entry)](https://packagephobia.com/result?p=react-native-phone-entry) -->
 
 `react-native-phone-entry` is a simple and fully modifiable Phone Number Input Component for React Native that provides an intuitive interface for entering and validating international phone numbers. It includes country code selection, number formatting, and validation features.
 
