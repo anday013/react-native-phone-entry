@@ -175,4 +175,4 @@ This project is licensed under the [MIT License](https://github.com/anday013/rea
 
 Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
 
-Inspired by [react-native-phone-number-input](https://github.com/jacklam718/react-native-phone-number-input)
+Inspired by [react-native-phone-number-input](https://github.com/garganurag893/react-native-phone-number-input)
