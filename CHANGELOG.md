@@ -1,5 +1,13 @@
 # Changelog
 
+## <small>0.2.1 (2025-02-11)</small>
+
+* chore: add types to package.json ([9a0f961](https://github.com/anday013/react-native-phone-entry/commit/9a0f961))
+* docs: add badges ([470c660](https://github.com/anday013/react-native-phone-entry/commit/470c660))
+* docs: typo in github link ([703f151](https://github.com/anday013/react-native-phone-entry/commit/703f151))
+* fix: depenndencies ([9aa44ee](https://github.com/anday013/react-native-phone-entry/commit/9aa44ee))
+* test: edit coverage reports ([f6e6655](https://github.com/anday013/react-native-phone-entry/commit/f6e6655))
+
 ## 0.2.0 (2025-02-10)
 
 * fix: tiny issues ([6f8b957](https://github.com/anday013/react-native-phone-entry/commit/6f8b957))
