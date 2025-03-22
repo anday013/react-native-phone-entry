@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>0.2.2 (2025-03-22)</small>
+
+* docs: add reference to react-native-otp-entry ([b0d863e](https://github.com/anday013/react-native-phone-entry/commit/b0d863e))
+
 ## <small>0.2.1 (2025-02-11)</small>
 
 * chore: add types to package.json ([9a0f961](https://github.com/anday013/react-native-phone-entry/commit/9a0f961))
