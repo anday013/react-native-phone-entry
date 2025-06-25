@@ -4,7 +4,7 @@ import CountryPicker, {
   CountryModalProvider,
   DARK_THEME,
   DEFAULT_THEME,
-  Flag,
+  FlagButton,
 } from 'react-native-country-picker-modal';
 import MaskInput from 'react-native-mask-input';
 import { EXCLUDED_COUNTRIES } from './constants';
@@ -43,9 +43,10 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
 
   const renderFlagButton = useCallback(
     () => (
-      <Flag
+      <FlagButton
         countryCode={countryCode}
         flagSize={flagProps?.flagSize || DEFAULT_THEME.flagSize}
+        placeholder={countryCode}
         {...flagProps}
       />
     ),
