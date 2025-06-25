@@ -1,5 +1,10 @@
 # Changelog
 
+## <small>0.2.3 (2025-06-25)</small>
+
+* chore: format package.json ([46abe51](https://github.com/anday013/react-native-phone-entry/commit/46abe51))
+* fix: fix show country flag ([b25fc7b](https://github.com/anday013/react-native-phone-entry/commit/b25fc7b))
+
 ## <small>0.2.2 (2025-03-22)</small>
 
 * docs: add reference to react-native-otp-entry ([b0d863e](https://github.com/anday013/react-native-phone-entry/commit/b0d863e))
