@@ -7,3 +7,8 @@ export { PhoneInput } from './PhoneInput';
 export { isValidNumber } from './utils';
 
 export type { PhoneInputProps } from './PhoneInput.types';
+
+export type {
+  CallingCode,
+  CountryCode,
+} from 'react-native-country-picker-modal';
