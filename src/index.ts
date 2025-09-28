@@ -4,5 +4,7 @@ export {
   isValidNumber,
   MASK_PER_COUNTRY,
   PhoneInput,
+  type CallingCode,
+  type CountryCode,
   type PhoneInputProps,
 } from './PhoneInput';
