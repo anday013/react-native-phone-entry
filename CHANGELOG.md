@@ -1,5 +1,13 @@
 # Changelog
 
+## <small>0.2.4 (2025-09-28)</small>
+
+* fix: correct Saudi Arabia phone number mask format ([72c5659](https://github.com/anday013/react-native-phone-entry/commit/72c5659))
+* fix: update country mask ([9f8953c](https://github.com/anday013/react-native-phone-entry/commit/9f8953c))
+* chore: export picker modal types from index file ([821bcaf](https://github.com/anday013/react-native-phone-entry/commit/821bcaf))
+* refactor: additional export types ([129278c](https://github.com/anday013/react-native-phone-entry/commit/129278c))
+* Update constants.ts ([688eca4](https://github.com/anday013/react-native-phone-entry/commit/688eca4))
+
 ## <small>0.2.3 (2025-06-25)</small>
 
 * chore: format package.json ([46abe51](https://github.com/anday013/react-native-phone-entry/commit/46abe51))
