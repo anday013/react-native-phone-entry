@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import type {
-  CallingCode,
-  CountryCode,
-} from 'react-native-country-picker-modal';
-import { PhoneInput, isValidNumber } from 'react-native-phone-entry';
+import {
+  PhoneInput,
+  isValidNumber,
+  type CallingCode,
+  type CountryCode,
+} from 'react-native-phone-entry';
 
 export default function App() {
   const [phoneNumber, setPhoneNumber] = useState('');

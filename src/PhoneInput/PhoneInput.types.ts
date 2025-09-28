@@ -30,11 +30,12 @@ export type PhoneInputProps = {
   renderCustomDropdown?: JSX.Element;
   theme?: Theme;
   maskInputProps?: MaskInputProps;
-  countryPickerProps?: Parameters<typeof CountryPicker>[0];
+  countryPickerProps?: Partial<Parameters<typeof CountryPicker>[0]>;
   flagProps?: Parameters<typeof Flag>[0];
   isCallingCodeEditable?: boolean;
   dropDownImageProps?: ImageProps;
 };
+
 interface Theme {
   containerStyle?: StyleProp<ViewStyle>;
   textInputStyle?: StyleProp<TextStyle>;
