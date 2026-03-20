@@ -329,6 +329,7 @@ export const MASK_PER_COUNTRY: Partial<{
     /\d/,
     /\d/,
     /\d/,
+    /\d/,
     '-',
     /\d/,
     /\d/,
