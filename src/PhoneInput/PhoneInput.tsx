@@ -1,5 +1,13 @@
-import React, { useCallback } from 'react';
-import { Appearance, Image, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import {
+  Appearance,
+  Image,
+  NativeEventEmitter,
+  NativeModules,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import CountryPicker, {
   CountryModalProvider,
   DARK_THEME,
@@ -22,6 +30,21 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
     actions: { handleChangeText, onSelect },
     forms: { modalVisible, showModal, hideModal },
   } = usePhoneInput(props);
+
+  // Keep a stable ref so the effect closure never goes stale.
+  const showModalRef = useRef(showModal);
+  showModalRef.current = showModal;
+
+  useEffect(() => {
+    if (Platform.OS !== 'ios') return;
+    const { RNPhonePadKeyboard } = NativeModules;
+    if (!RNPhonePadKeyboard) return;
+    const emitter = new NativeEventEmitter(RNPhonePadKeyboard);
+    const sub = emitter.addListener('onCountryPickerRequested', () =>
+      showModalRef.current()
+    );
+    return () => sub.remove();
+  }, []);
 
   const {
     theme: {
@@ -104,7 +127,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
           editable={!disabled}
           selectionColor="black"
           keyboardAppearance={enableDarkTheme ? 'dark' : 'default'}
-          keyboardType="number-pad"
+          keyboardType="phone-pad"
           autoFocus={autoFocus}
           {...maskInputProps}
         />

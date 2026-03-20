@@ -8,3 +8,4 @@ export {
   type CountryCode,
   type PhoneInputProps,
 } from './PhoneInput';
+export { configureIPadPhonePad } from './PhonePadKeyboard';

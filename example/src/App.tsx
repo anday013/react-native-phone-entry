@@ -12,6 +12,9 @@ import {
   type CallingCode,
   type CountryCode,
 } from 'react-native-phone-entry';
+import { configureIPadPhonePad } from 'react-native-phone-entry';
+
+configureIPadPhonePad(); // no-op on iPhone, Android, or web
 
 export default function App() {
   const [phoneNumber, setPhoneNumber] = useState('');
