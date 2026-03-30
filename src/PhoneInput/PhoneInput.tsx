@@ -42,11 +42,12 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props) => {
   } = props;
 
   const renderFlagButton = useCallback(
-    () => (
+    (flagButtonProps?: { onOpen?: () => void }) => (
       <FlagButton
         countryCode={countryCode}
         flagSize={flagProps?.flagSize || DEFAULT_THEME.flagSize}
         placeholder={countryCode}
+        onOpen={flagButtonProps?.onOpen}
         {...flagProps}
       />
     ),
